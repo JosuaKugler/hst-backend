@@ -1,0 +1,10 @@
+Fragen:
+    Wie viele Haushalte mit jeweils wievielen Personen?
+    Wie viele Plätze hat eine WG?
+    Watchpartys durchgehend oder nur an einem Abend?
+    Welche Daten muss man bei der Anmeldung erheben?
+
+
+Ideen:
+    OSM Karte muss auch schon die Daten hier aus Django nehmen -> Daten an einem Ort
+    
