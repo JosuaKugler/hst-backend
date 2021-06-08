@@ -7,4 +7,5 @@ Fragen:
 
 Ideen:
     OSM Karte muss auch schon die Daten hier aus Django nehmen -> Daten an einem Ort
+    Datenbank Backup cronjob?
     
