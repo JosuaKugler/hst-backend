@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Anmeldung Watchparty</title>
+    </head>
+    <body>
+        <h1>Watchparty</h1>
+        <h3>Adresse</h3>
+        <p>
+            {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->
+            {{ watchparty_list.0.plz }} {{ watchparty_list.0.city }}
+        </p>
+        <form action="{% url 'register' watchparty_list.0.loc_id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Anmelden">
+            </form>
+    </body>
+</html>

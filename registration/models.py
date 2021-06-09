@@ -5,12 +5,12 @@ from django.db import models
 class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
+    email = models.EmailField()
     is_vaccinated = models.BooleanField()
     haushalt_id = models.IntegerField()
     
 class Watchparty(models.Model):
-    watchparty_loc_id = models.IntegerField() #watchpartys at the same place get the same id
+    loc_id = models.IntegerField() #watchpartys at the same place get the same id
     #adress
     plz = models.CharField(max_length=5)
     city = models.CharField(max_length=200)
