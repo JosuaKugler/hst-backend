@@ -11,6 +11,7 @@
             {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->
             {{ watchparty_list.0.plz }} {{ watchparty_list.0.city }}
         </p>
+        <h3>Deine Daten</h3>
         <form action="{% url 'register' watchparty_list.0.loc_id %}" method="post">
             {% csrf_token %}
             {{ form }}

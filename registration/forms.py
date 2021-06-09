@@ -24,5 +24,5 @@ class MainForm(forms.Form):
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
     email = forms.EmailField(label="E-Mail-Adresse")
-    is_vaccinated = forms.BooleanField(required=False)
+    is_vaccinated = forms.BooleanField(label="Geimpft oder Genesen?", required=False)
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHOICES)

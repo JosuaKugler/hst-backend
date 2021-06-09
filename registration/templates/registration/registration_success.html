@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>Anmeldung erfolgreich</title>
+</head>
+<body>
+    {% if watchparty_list %}
+    {% if watchparty_list|length > 1 %}
+    <h1>Du hast dich erfolgreich für folgende Watchpartys angemeldet:</h1>
+    {% else %}
+    <h1>Du hast dich erfolgreich für folgende Watchparty angemeldet:</h1>
+    {% endif %}
+    <ul>
+    {% for watchparty in watchparty_list %}
+        <li>{{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Keine Registration erfolgt.</p>
+{% endif %}
+</body>
+
+</html>
