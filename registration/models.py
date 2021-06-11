@@ -7,7 +7,9 @@ class User(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.EmailField()
     is_vaccinated = models.BooleanField()
+    wants_rapid_test = models.BooleanField()
     haushalt_id = models.IntegerField()
+    is_active = models.BooleanField()
     
 class Watchparty(models.Model):
     loc_id = models.IntegerField() #watchpartys at the same place get the same id

@@ -1,0 +1,14 @@
+{% autoescape off %}
+<h2>Hi {{ user.first_name }},</h2>
+{% if watchparty_list|length > 1 %}
+<h3>Du hast dich erfolgreich für folgende Watchpartys angemeldet:</h3>
+{% else %}
+<h3>Du hast dich erfolgreich für folgende Watchparty angemeldet:</h3>
+{% endif %}
+<ul>
+    {% for watchparty in watchparty_list %}
+    <li>{{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day }}</li>
+    {% endfor %}
+</ul>
+Bitte klicke <a href='http://{{ domain }}{% url 'activate' uidb64=uid token=token %}'>hier</a>, um deine Anmeldung zu bestätigen.
+{% endautoescape %}

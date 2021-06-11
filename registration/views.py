@@ -1,11 +1,15 @@
-import registration
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Max
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
 
 from .models import Watchparty, User, Registration
 from .forms import MainForm
+from .tokens import account_activation_token
 
 # Create your views here.
 def index(request):
@@ -29,7 +33,9 @@ def register(request, watchparty_loc_id):
                 last_name = form.cleaned_data['last_name'],
                 email = form.cleaned_data['email'],
                 is_vaccinated = form.cleaned_data['is_vaccinated'],
-                haushalt_id = haushalt_id__max + 1
+                wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                haushalt_id = haushalt_id__max + 1,
+                is_active = False
             )
             user.save()
 
@@ -52,7 +58,8 @@ def register(request, watchparty_loc_id):
                 registration.save()
 
             #do email stuff
-            send_validation_email(user, selected_watchpartys)
+            domain = get_current_site(request).domain
+            send_validation_email(user, selected_watchpartys, domain)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -69,29 +76,38 @@ def registration_success(request, user_id):
     registrations = Registration.objects.filter(user = user)
     watchparty_list = [registration.watchparty for registration in registrations]
     context = {'watchparty_list': watchparty_list}
-    #deal with sending mail stuff here
     return render(request, 'registration/registration_success.html', context)
 
-def validation_success(request):
-    #link that user gets in email
-    return HttpResponse("Hello, world. You're at the registration index.")
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        # return redirect('home')
+        return HttpResponse('Deine Anmeldung wurde bestätigt. Vielen Dank!')
+    else:
+        return HttpResponse('Aktivierungslink ungültig!')
 
-#helper function
+#helper functions
 def max_haushalt_id():
     return User.objects.all().aggregate(Max('haushalt_id'))['haushalt_id__max']
 
 
-def send_validation_email(user, watchparty_list):
+def send_validation_email(user, watchparty_list, domain):
     subject = 'Anmeldung Hochschultage Watchparty'
-    message = 'Hi ' + user.first_name + ',\n'
-    if len(watchparty_list) > 1:
-        message += 'Du hast dich erfolgreich für folgende Watchpartys angemeldet:\n'
-    else:
-        message += 'Du hast dich erfolgreich für folgende Watchparty angemeldet:\n'
-    
-    for watchparty in watchparty_list:
-        message += f'  - {watchparty.street}, {watchparty.plz} {watchparty.city} am {watchparty.day}\n'
-    
+    context = {
+        'user': user,
+        'watchparty_list': watchparty_list,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'domain': domain
+    }
+    htmlmessage = render_to_string('registration/validation_email.html', context)
+    message = render_to_string('registration/validation_email.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
-    send_mail(subject, message, from_email, [user.email], fail_silently=False)
+    send_mail(subject, message, from_email, [user.email], html_message=htmlmessage, fail_silently=False)

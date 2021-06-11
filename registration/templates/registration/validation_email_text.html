@@ -1,0 +1,16 @@
+{% autoescape off %}
+
+Hi {{ user.first_name }},
+{% if watchparty_list|length > 1 %}
+Du hast dich erfolgreich für folgende Watchpartys angemeldet:
+{% else %}
+Du hast dich erfolgreich für folgende Watchparty angemeldet:
+{% endif %}
+{% for watchparty in watchparty_list %}
+    - {{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day }}</li>
+{% endfor %}
+
+Bitte klicke auf den Link, um deine Anmeldung zu bestätigen:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}
