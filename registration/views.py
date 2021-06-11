@@ -52,7 +52,7 @@ def register(request, watchparty_loc_id):
                 registration.save()
 
             #do email stuff
-            send_mail('Anmeldung Hochschultage Watchparty',)
+            send_validation_email(user, selected_watchpartys)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -63,7 +63,6 @@ def register(request, watchparty_loc_id):
 
     context = {'form': form, 'watchparty_list': watchparty_list}
     return render(request, 'registration/watchparty_registration.html', context)
-
 
 def registration_success(request, user_id):
     user = get_object_or_404(User, id = user_id)
@@ -84,7 +83,7 @@ def max_haushalt_id():
 
 def send_validation_email(user, watchparty_list):
     subject = 'Anmeldung Hochschultage Watchparty'
-    message = 'Hi' + user.firstname + ',\n'
+    message = 'Hi ' + user.first_name + ',\n'
     if len(watchparty_list) > 1:
         message += 'Du hast dich erfolgreich für folgende Watchpartys angemeldet:\n'
     else:
@@ -95,4 +94,4 @@ def send_validation_email(user, watchparty_list):
     
     from_email = 'kontakt@hst-heidelberg.de'
 
-    send_mail(subject, message, from_email, [user.email])
+    send_mail(subject, message, from_email, [user.email], fail_silently=False)

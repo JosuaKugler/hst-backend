@@ -1,8 +1,9 @@
 Fragen:
     Wie viele Haushalte mit jeweils wievielen Personen?
     Wie viele Plätze hat eine WG?
-    Watchpartys durchgehend oder nur an einem Abend?
+    Watchpartys durchgehend oder nur an einem Abend? auch nur 
     Welche Daten muss man bei der Anmeldung erheben?
+    Checkbox für Schnelltests
 
 
 Ideen:
