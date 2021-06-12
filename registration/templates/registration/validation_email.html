@@ -7,7 +7,8 @@
 {% endif %}
 <ul>
     {% for watchparty in watchparty_list %}
-    <li>{{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day }}</li>
+    <li>{{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am 
+        {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.</li>
     {% endfor %}
 </ul>
 Bitte klicke <a href='http://{{ domain }}{% url 'activate' uidb64=uid token=token %}'>hier</a>, um deine Anmeldung zu bestätigen.

@@ -105,6 +105,9 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Aktivierungslink ungültig!')
 
+def new_watchparty(request):
+    return HttpResponse('Hier entsteht eine neue Watchparty')
+
 #helper functions
 def max_haushalt_id():
     return User.objects.all().aggregate(Max('haushalt_id'))['haushalt_id__max']
@@ -123,4 +126,9 @@ def send_validation_email(user, watchparty_list, domain):
     message = render_to_string('registration/validation_email.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
-    send_mail(subject, message, from_email, [user.email], html_message=htmlmessage, fail_silently=False)
+    send_mail(subject, 
+        message, 
+        from_email, 
+        [user.email], 
+        #html_message=htmlmessage, 
+        fail_silently=False)
