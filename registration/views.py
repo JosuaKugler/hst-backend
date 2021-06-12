@@ -46,6 +46,7 @@ def register(request, watchparty_loc_id):
                 email = form.cleaned_data['email'],
                 is_vaccinated = form.cleaned_data['is_vaccinated'],
                 wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                address = form.cleaned_data['address'],
                 haushalt_id = haushalt_id__max + 1,
                 is_active = False
             )

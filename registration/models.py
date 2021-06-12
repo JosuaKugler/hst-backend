@@ -6,6 +6,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField()
+    address = models.CharField(max_length=200)
     is_vaccinated = models.BooleanField()
     wants_rapid_test = models.BooleanField()
     haushalt_id = models.IntegerField()
