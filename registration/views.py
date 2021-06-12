@@ -13,7 +13,19 @@ from .tokens import account_activation_token
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. You're at the registration index.")
+    W = Watchparty.objects.all()
+    loc_ids = list(set([x.loc_id for x in list(W)])) # get all unique location ids
+    
+    W_repr_list = [W.filter(loc_id = loc_id)[0] for loc_id in loc_ids] #Repräsentatensystem für Watchpartys/(gleiche location)
+
+    loc_dict = {}
+    for watchparty in W_repr_list:
+        plzcity = f"{watchparty.plz} {watchparty.city}"
+        domain = get_current_site(request).domain
+        link = f"http://{domain}/registration/{watchparty.loc_id}/"
+        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link}
+
+    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict})
 
 def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id

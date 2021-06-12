@@ -15,6 +15,7 @@
         <form action="{% url 'register' watchparty_list.0.loc_id %}" method="post">
             {% csrf_token %}
             {{ form }}
+            <button>Weitere Person aus demselben Haushalt hinzufügen</button>
             <input type="submit" value="Anmelden">
             </form>
     </body>

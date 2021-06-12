@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map" >
+    <!-- Button to close the overlay navigation -->
+    <!--<a href="javascript:void(0)" class="leaflet-top leaflet-right" style="pointer-events: auto" onclick="closeMap()">&times;</a>-->
+</div>
+<!--<div id="map" style="height: 100%" ></div>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    data = {{ loc_dict|safe }};
+    var map = L.map('map').setView({lat: 49.43, lon: 8.6759873}, 12);
+    // add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    // show the scale bar on the lower left corner
+    L.control.scale().addTo(map);
+    var yellowIcon = L.icon({
+        iconUrl: "{% static 'marker.svg' %}",
+        iconSize:     [38, 95], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    async function add_markers () {
+        for (key in data) {
+            value = data[key];
+            await $.get(
+                location.protocol + '//nominatim.openstreetmap.org/search?format=json&q='+ value.plzcity + ", " + value.street, 
+                function(data) {
+                    console.log(data);
+                    lon = data[0].lon;
+                    lat = data[0].lat;
+                    var popupStr = '<strong>' + value.plzcity + '</strong><br>' +  value.street + '<br><br>' + '<a href="' + value.link + '">Anmeldung</a>'
+                    L.marker([lat, lon], {icon: yellowIcon}).addTo(map).bindPopup(popupStr);
+                }
+            );
+        }
+    }
+    add_markers()
+
+</script>
+<!--<script src="{% static 'locations.js' %}"></script>-->
+</body>
+</html>
