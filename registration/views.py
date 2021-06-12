@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Max
@@ -6,9 +7,10 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.regex_helper import Choice
 
 from .models import Watchparty, User, Registration
-from .forms import MainForm
+from .forms import MainForm, WatchpartyForm
 from .tokens import account_activation_token
 
 # Create your views here.
@@ -106,11 +108,53 @@ def activate(request, uidb64, token):
         return HttpResponse('Aktivierungslink ungültig!')
 
 def new_watchparty(request):
-    return HttpResponse('Hier entsteht eine neue Watchparty')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = WatchpartyForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # deal with request.POST data here, see https://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
+            # then redirect to successful registration page with validation email info
+            # process the data in form.cleaned_data as required
+            
+            #get all days
+            daynumbers = form.cleaned_data['days']
+            days = [date(year=2021, month=6, day=20 + int(i)) for i in daynumbers]
+
+            #create Watchparty:
+            loc_id__max = max_loc_id()
+            for day in days:
+                watchparty = Watchparty(
+                    plz = form.cleaned_data['plz'],
+                    city = form.cleaned_data['city'],
+                    street = form.cleaned_data['city'],
+                    day = day,
+                    max_place_num = form.cleaned_data['max_place_num'],
+                    wg_people_num = form.cleaned_data['wg_people_num'],
+                    loc_id = loc_id__max + 1,
+                )
+                watchparty.save()
+
+            #do email stuff
+            #domain = get_current_site(request).domain
+            #send_validation_email(user, selected_watchpartys, domain)
+
+            # redirect to a new URL:
+            #return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
+            return HttpResponse("Watchparty created")
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = WatchpartyForm()
+
+    context = {'form': form}
+    return render(request, 'registration/new_watchparty.html', context)
 
 #helper functions
 def max_haushalt_id():
     return User.objects.all().aggregate(Max('haushalt_id'))['haushalt_id__max']
+
+def max_loc_id():
+    return Watchparty.objects.all().aggregate(Max('loc_id'))['loc_id__max']
 
 
 def send_validation_email(user, watchparty_list, domain):
@@ -123,7 +167,7 @@ def send_validation_email(user, watchparty_list, domain):
         'domain': domain
     }
     htmlmessage = render_to_string('registration/validation_email.html', context)
-    message = render_to_string('registration/validation_email.html', context)
+    message = render_to_string('registration/validation_email_text.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
     send_mail(subject, 
