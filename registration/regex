@@ -1,0 +1,2 @@
+search = src="([^{:"]+)"
+replace = src="{% static '$1' %}"
