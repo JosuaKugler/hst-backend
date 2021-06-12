@@ -14,13 +14,18 @@ class User(models.Model):
     
 class Watchparty(models.Model):
     loc_id = models.IntegerField() #watchpartys at the same place get the same id
-    #adress
+    #address
     plz = models.CharField(max_length=5)
     city = models.CharField(max_length=200)
     street = models.CharField(max_length=200)
     day = models.DateField(max_length=200)
     max_place_num = models.IntegerField() #maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
     wg_people_num = models.IntegerField() #Anzahl der Personen in der Veranstalter-WG
+    #host info
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    is_active = models.BooleanField()
 
 class Registration(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

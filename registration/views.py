@@ -127,21 +127,27 @@ def new_watchparty(request):
                 watchparty = Watchparty(
                     plz = form.cleaned_data['plz'],
                     city = form.cleaned_data['city'],
-                    street = form.cleaned_data['city'],
+                    street = form.cleaned_data['street'],
                     day = day,
                     max_place_num = form.cleaned_data['max_place_num'],
                     wg_people_num = form.cleaned_data['wg_people_num'],
                     loc_id = loc_id__max + 1,
+                    email = form.cleaned_data['email'],
+                    first_name = form.cleaned_data['first_name'],
+                    last_name = form.cleaned_data['last_name'],
+                    is_active = False
                 )
                 watchparty.save()
 
+            
+            
             #do email stuff
-            #domain = get_current_site(request).domain
-            #send_validation_email(user, selected_watchpartys, domain)
+            domain = get_current_site(request).domain
+            send_watchparty_validation_email(Watchparty.objects.all().filter(loc_id = loc_id__max + 1), domain)
 
             # redirect to a new URL:
-            #return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
-            return HttpResponse("Watchparty created")
+            return HttpResponseRedirect('/registration/watchparty_registration_success/' + str(watchparty.loc_id) + '/')
+            #return HttpResponse("Watchparty created")
     # if a GET (or any other method) we'll create a blank form
     else:
         form = WatchpartyForm()
@@ -149,12 +155,40 @@ def new_watchparty(request):
     context = {'form': form}
     return render(request, 'registration/new_watchparty.html', context)
 
+def watchparty_registration_success(request, loc_id):
+    watchparty_list = get_list_or_404(Watchparty, loc_id = loc_id)
+    context = {'watchparty_list': watchparty_list}
+    return render(request, 'registration/watchparty_registration_success.html', context)
+
+def watchparty_activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        watchparty = Watchparty.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        watchparty = None
+    if watchparty is not None and account_activation_token.check_token(watchparty, token):
+        for watchparty in Watchparty.objects.all().filter(loc_id = watchparty.loc_id):
+            watchparty.is_active = True
+            watchparty.save()
+        # return redirect('home')
+        return HttpResponse('Deine Emailadresse wurde bestätigt. Vielen Dank!')
+    else:
+        return HttpResponse('Aktivierungslink ungültig!')
+
 #helper functions
 def max_haushalt_id():
-    return User.objects.all().aggregate(Max('haushalt_id'))['haushalt_id__max']
+    a = User.objects.all().aggregate(Max('haushalt_id'))['haushalt_id__max']
+    if a:
+        return a
+    else:
+        return 0
 
 def max_loc_id():
-    return Watchparty.objects.all().aggregate(Max('loc_id'))['loc_id__max']
+    a = Watchparty.objects.all().aggregate(Max('loc_id'))['loc_id__max'] 
+    if a:
+        return a
+    else:
+        return 0
 
 
 def send_validation_email(user, watchparty_list, domain):
@@ -166,7 +200,7 @@ def send_validation_email(user, watchparty_list, domain):
         'token': account_activation_token.make_token(user),
         'domain': domain
     }
-    htmlmessage = render_to_string('registration/validation_email.html', context)
+    #htmlmessage = render_to_string('registration/validation_email.html', context)
     message = render_to_string('registration/validation_email_text.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
@@ -174,5 +208,27 @@ def send_validation_email(user, watchparty_list, domain):
         message, 
         from_email, 
         [user.email], 
+        #html_message=htmlmessage, 
+        fail_silently=False)
+
+
+def send_watchparty_validation_email(watchparty_list, domain):
+    subject = 'Hochschultage Watchparty Erstellen'
+    repr_watchparty = watchparty_list[0]
+    context = {
+        'watchparty_list': watchparty_list,
+        'first_name': repr_watchparty.first_name,
+        'uid': urlsafe_base64_encode(force_bytes(repr_watchparty.pk)),
+        'token': account_activation_token.make_token(repr_watchparty), #should also work with watchparty
+        'domain': domain
+    }
+    #htmlmessage = render_to_string('registration/validation_email.html', context)
+    message = render_to_string('registration/watchparty_validation_email_text.html', context)
+    from_email = 'kontakt@hst-heidelberg.de'
+
+    send_mail(subject, 
+        message, 
+        from_email, 
+        [repr_watchparty.email], 
         #html_message=htmlmessage, 
         fail_silently=False)

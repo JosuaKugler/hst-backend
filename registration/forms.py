@@ -43,11 +43,15 @@ class WatchpartyForm(forms.Form):
         ('5', 'Freitag, 25.06.2021'),
         ('6', 'Samstag, 26.06.2021'),
     ]
+    first_name = forms.CharField(label="Vorname", max_length=200)
+    last_name = forms.CharField(label="Nachname", max_length=200)
+    email = forms.EmailField(label="E-Mail-Adresse")
+    
     plz = forms.CharField(max_length=5, label="Postleitzahl")
     city = forms.CharField(max_length=200)
     street = forms.CharField(max_length=200)
     # maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
     max_place_num = forms.IntegerField(label="Wie viele Menschen passen in deine WG? (Inklusive dir und deinen Mitbewohnern)")
-    wg_people_num = forms.IntegerField(label="Wie viele Menschen wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
+    wg_people_num = forms.IntegerField(label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du die Watchparty anbieten?")
