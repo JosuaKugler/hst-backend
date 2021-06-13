@@ -8,6 +8,6 @@ Du hast dich erfolgreich für folgende Watchparty angemeldet:
 {% for watchparty in watchparty_list %}
     - {{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.
 {% endfor %}
-Der Gastgeber dieser Watchparty-Location ist {{ watchparty.first_name }} {{ watchparty.last_name }}.
-Bei Fragen schreib ihm gerne an {{ watchparty.email }}.
+Der Gastgeber dieser Watchparty-Location ist {{ watchparty_list.0.first_name }} {{ watchparty_list.0.last_name }}.
+Bei Fragen schreib ihm gerne an {{ watchparty_list.0.email }}.
 {% endautoescape %}

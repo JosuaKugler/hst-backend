@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Max
@@ -12,6 +12,7 @@ from django.utils.regex_helper import Choice
 from .models import Watchparty, User, Registration
 from .forms import MainForm, WatchpartyForm
 from .tokens import account_activation_token
+from registration import models
 
 # Create your views here.
 def index(request):
@@ -62,7 +63,7 @@ def register(request, watchparty_loc_id):
             
             selected_watchpartys = []
             for watchparty in watchpartys:
-                print(watchparty.day.weekday())
+                #print(watchparty.day.weekday())
                 if str(watchparty.day.weekday()) in days:
                     selected_watchpartys.append(watchparty)
 
@@ -76,7 +77,7 @@ def register(request, watchparty_loc_id):
 
             #do email stuff
             domain = get_current_site(request).domain
-            send_email_validation_email(user, domain)
+            send_email_validation_email(user, domain, "activate")
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -92,6 +93,7 @@ def registration_success(request, user_id):
     user = get_object_or_404(User, id = user_id)
     registrations = Registration.objects.filter(user = user)
     watchparty_list = [registration.watchparty for registration in registrations]
+    print(watchparty_list)
     context = {'watchparty_list': watchparty_list}
     return render(request, 'registration/registration_success.html', context)
 
@@ -111,7 +113,7 @@ def activate(request, uidb64, token):
         domain = get_current_site(request).domain
         send_confirmation_email(user, watchparty_list, domain)
         context = {'watchparty_list': watchparty_list}
-        return render(request, 'registration/avtivate.html', context)
+        return render(request, 'registration/activate.html', context)
     else:
         return HttpResponse('Aktivierungslink ungültig!')
 
@@ -152,7 +154,7 @@ def new_watchparty(request):
             #do email stuff
             domain = get_current_site(request).domain
             repr_watchparty = Watchparty.objects.all().filter(loc_id = loc_id__max + 1)[0]
-            send_email_validation_email(repr_watchparty, domain)
+            send_email_validation_email(repr_watchparty, domain, "watchparty_activate")
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/watchparty_registration_success/' + str(watchparty.loc_id) + '/')
             #return HttpResponse("Watchparty created")
@@ -174,6 +176,7 @@ def watchparty_activate(request, uidb64, token):
         watchparty = Watchparty.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         watchparty = None
+
     if watchparty is not None and account_activation_token.check_token(watchparty, token):
         watchparty_list = get_list_or_404(Watchparty, loc_id = watchparty.loc_id)
         context = {'watchparty_list': watchparty_list}
@@ -203,15 +206,16 @@ def max_loc_id():
         return 0
 
 
-def send_email_validation_email(obj, domain):
+def send_email_validation_email(obj, domain, type_activate):
     subject = 'Bestätige deine Emailadresse'
     context = {
         'first_name': obj.first_name,
         'uid': urlsafe_base64_encode(force_bytes(obj.pk)),
         'token': account_activation_token.make_token(obj),
-        'domain': domain
+        'domain': domain,
+        'type_activate': type_activate
     }
-    message = render_to_string('registration/validation_email_text.html', context)
+    message = render_to_string('registration/email_validation_email_text.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
     send_mail(subject, 
