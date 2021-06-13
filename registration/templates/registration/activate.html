@@ -17,9 +17,9 @@
     <div class="container bg-light p-3">
         {% if watchparty_list %}
             {% if watchparty_list|length > 1 %}
-                <h3>Bitte bestätige deine Emailadresse, um die Anmeldung für folgende Watchpartys abzuschließen:</h3>
+                <h3>Du hast dich erfolgreich für folgende Watchpartys angemeldet:</h3>
             {% else %}
-                <h3>Bitte bestätige deine Emailadresse, um die Anmeldung für folgende Watchparty abzuschließen:</h3>
+                <h3>Du hast dich erfolgreich für folgende Watchparty angemeldet:</h3>
             {% endif %}
             <ul>
             {% for watchparty in watchparty_list %}
@@ -27,7 +27,6 @@
                     {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.</li>
             {% endfor %}
             </ul>
-            Schau bitte auch im Spamordner!
         {% else %}
             <p>Keine Registration erfolgt.</p>
         {% endif %}

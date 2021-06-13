@@ -17,9 +17,9 @@
     <div class="container bg-light p-3">
         {% if watchparty_list %}
             {% if watchparty_list|length > 1 %}
-                <h3>Du hast erfolgreich folgende Watchpartys erstellt:</h3>
+                <h3>Bitte bestätige deine Emailadresse, um das Erstellen folgender Watchpartys zu bestätigen:</h3>
             {% else %}
-                <h3>Du hast erfolgreich folgende Watchparty erstellt:</h3>
+                <h3>Bitte bestätige deine Emailadresse, um das Erstellen folgender Watchparty zu bestätigen:</h3>
             {% endif %}
             <ul>
             {% for watchparty in watchparty_list %}
@@ -27,10 +27,10 @@
                     {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.</li>
             {% endfor %}
             </ul>
-            Bitte bestätige deine Emailadresse, um die Anmeldung abzuschließen, schau ggf. auch im Spamordner.
         {% else %}
             <p>Fehler: Keine Watchparty erstellt.</p>
         {% endif %}
+        Schau bitte auch im Spamordner nach.
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
