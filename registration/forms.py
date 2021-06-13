@@ -6,6 +6,7 @@ class MainForm(forms.Form):
     def __init__(self, *args, **kwargs):
         # get watchparty_list in order to display selectable watchparty days
         self.watchparty_list = kwargs.pop('watchparty_list')
+        self.only_vaccinated_list = kwargs.pop('only_vaccinated_list')
         newCHOICES = []
         week = [
             'Montag',
@@ -17,6 +18,8 @@ class MainForm(forms.Form):
             'Sonntag']
         for i, watchparty in enumerate(self.watchparty_list):
             weekday = week[watchparty.day.weekday()]
+            if watchparty in self.only_vaccinated_list:
+                weekday = str(weekday) + " (nur für Geimpfte!)"
             newCHOICES.append((i, weekday))
         super(MainForm, self).__init__(*args, **kwargs)
         self.fields['days'].choices = newCHOICES

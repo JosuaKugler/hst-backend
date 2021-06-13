@@ -14,6 +14,10 @@ from .forms import MainForm, WatchpartyForm
 from .tokens import account_activation_token
 from registration import models
 
+#corona-rules:
+max_people = 10
+max_households = 3
+
 # Create your views here.
 def index(request):
     W = Watchparty.objects.all().filter(is_active = True)
@@ -34,14 +38,33 @@ def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id
     if watchparty_list[0].is_active != True:
         return HttpResponse('Die Mailadresse des Watchparty-Gastgebers wurde noch nicht bestätigt.')
+    
+    new_watchparty_list = []
+    only_vaccinated_list = []
+
+    for watchparty in watchparty_list:
+        if get_total_people(watchparty) < watchparty.max_place_num - watchparty.wg_people_num: # there is still space
+            new_watchparty_list.append(watchparty)
+            if get_non_vaccined(watchparty) < max_people and get_households(watchparty) < max_households:
+                pass # open for all
+            else:
+                only_vaccinated_list.append(watchparty)
+
+    watchparty_list = new_watchparty_list # others are not relevant, because they are full
+
+    #create warning for template
+    for watchparty in watchparty_list:
+        pass
+
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = MainForm(request.POST, watchparty_list=watchparty_list)
+        form = MainForm(request.POST, watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
         # check whether it's valid:
         if form.is_valid():
             # deal with request.POST data here, see https://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
             # then redirect to successful registration page with validation email info
             # process the data in form.cleaned_data as required
+            
             
             #create User:
             haushalt_id__max = max_haushalt_id()
@@ -59,13 +82,19 @@ def register(request, watchparty_loc_id):
 
             # get all watchpartys the user registered for
             days = form.cleaned_data['days']
-            watchpartys = list(Watchparty.objects.filter(loc_id = watchparty_list[0].loc_id))#all watchpartys with the location id
             
             selected_watchpartys = []
-            for watchparty in watchpartys:
+            for watchparty in watchparty_list:
                 #print(watchparty.day.weekday())
                 if str(watchparty.day.weekday()) in days:
-                    selected_watchpartys.append(watchparty)
+                    if not user.is_vaccinated: #if user isn't vaccinated, a selected watchparty musn't be only_vaccinated
+                        if not (watchparty in only_vaccinated_list):
+                            selected_watchpartys.append(watchparty)
+                    else:
+                        selected_watchpartys.append(watchparty)
+            
+            if not selected_watchpartys:
+                return HttpResponse("Diese Watchparty ist nur für Geimpfte/Genesene noch verfügbar")
 
             #create registration objects
             for watchparty in selected_watchpartys:
@@ -84,10 +113,10 @@ def register(request, watchparty_loc_id):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = MainForm(watchparty_list=watchparty_list)
+        form = MainForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
 
     context = {'form': form, 'watchparty_list': watchparty_list}
-    return render(request, 'registration/watchparty_registration.html', context)
+    return render(request, 'registration/registration.html', context)
 
 def registration_success(request, user_id):
     user = get_object_or_404(User, id = user_id)
@@ -266,3 +295,32 @@ def send_watchparty_confirmation_email(watchparty_list, domain):
         [repr_watchparty.email], 
         #html_message=htmlmessage, 
         fail_silently=False)
+
+
+def get_total_people(watchparty):
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    cnt = 0
+    for registration in registrations:
+        if registration.user.is_active:
+            cnt += 1
+    return cnt
+
+def get_non_vaccined(watchparty):
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    cnt = 0
+    for registration in registrations:
+        if registration.user.is_active:
+            if not registration.user.is_vaccinated:
+                cnt += 1
+    return cnt
+
+def get_households(watchparty):
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    households = []
+    for registration in registrations:
+        if registration.user.is_active:
+            if not registration.user.is_vaccinated:
+                if not registration.user.haushalt_id in households:
+                    households.append(registration.user.haushalt_id)
+
+    return len(households)
