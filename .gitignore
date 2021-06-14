@@ -6,3 +6,5 @@ db.sqlite3
 migrations
 collect_static/
 .vscode
+gunicorn.access.log
+gunicorn.error.log
