@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  backend:
+    image: backend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes: 
+        - static_data:/app/collect_static # where all static files are moved to by python manage.py collectstatic
+    
+  proxy:
+    build:
+      context: ./nginx
+    volumes: 
+        - static_data:/vol/static
+    ports: 
+        - "8080:8080"
+    depends_on: 
+        - backend
+
+volumes: 
+    static_data:
