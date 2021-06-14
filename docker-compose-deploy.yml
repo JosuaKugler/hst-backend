@@ -8,12 +8,14 @@ services:
       dockerfile: ./Dockerfile
     volumes: 
         - static_data:/app/collect_static # where all static files are moved to by python manage.py collectstatic
+        - socket:/app/socket/
     
   proxy:
     build:
       context: ./nginx
     volumes: 
         - static_data:/vol/static
+        - socket:/vol/socket/
     ports: 
         - "8080:8080"
     depends_on: 
@@ -21,3 +23,4 @@ services:
 
 volumes: 
     static_data:
+    socket:
