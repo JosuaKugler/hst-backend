@@ -1,0 +1,7 @@
+[2021-06-15 01:25:30 +0200] [199814] [INFO] Starting gunicorn 20.1.0
+[2021-06-15 01:25:30 +0200] [199814] [ERROR] Retrying in 1 second.
+[2021-06-15 01:25:31 +0200] [199814] [ERROR] Retrying in 1 second.
+[2021-06-15 01:25:32 +0200] [199814] [ERROR] Retrying in 1 second.
+[2021-06-15 01:25:33 +0200] [199814] [ERROR] Retrying in 1 second.
+[2021-06-15 01:25:34 +0200] [199814] [ERROR] Retrying in 1 second.
+[2021-06-15 01:25:35 +0200] [199814] [ERROR] Can't connect to socket/gunicorn.sock
