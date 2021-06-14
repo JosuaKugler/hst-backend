@@ -16,6 +16,7 @@ RUN python -m pip install -r requirements.txt
 WORKDIR /app
 COPY . /app
 
+RUN mkdir socket
 RUN rm -rf collect_static
 RUN python3 manage.py collectstatic
 
