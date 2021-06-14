@@ -1,4 +1,4 @@
- {% load static %}
+{% load static %}
  <!DOCTYPE html>
  <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -10,17 +10,17 @@
         <meta property="og:title" content="Christliche Hochschultage 2021">
         <meta property="og:url" content="https://www.hst-heidelberg.de/index.html">
         <meta property="og:description" content="Die christlichen Hochschultage wollen Menschen herausfordern, sich Gedanken über den Glauben und die eigenen Werte und Einstellungen zu machen. Wir wollen Fragen stellen, Antworten suchen und uns gemeinsam auf die Suche machen. Näher zu dem, was uns ausmacht.">
-        <meta property="og:image" content="https://www.hst-heidelberg.de/assets/telescope.jpg">
+        <meta property="og:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_small.jpg">
         <meta property="og:type" content="website">
 
         <meta name="twitter:card" content="Christliche Hochschultage">
         <meta name="twitter:title" content="Christliche Hochschultage Heidelberg 2021">
         <meta name="twitter:description" content="Die christlichen Hochschultage wollen Menschen herausfordern, sich Gedanken über den Glauben und die eigenen Werte und Einstellungen zu machen. Wir wollen Fragen stellen, Antworten suchen und uns gemeinsam auf die Suche machen. Näher zu dem, was uns ausmacht.">
-        <meta name="twitter:image" content="https://www.hst-heidelberg.de/assets/img/telescope.jpg&quot;">
+        <meta name="twitter:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_small.jpg">
 
         <title>Hochschultage Heidelberg 2021</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo.png' %}">
+        <link rel="icon" type="image/x-icon" href="{% static "assets/img/logo.png" %}">
         <!-- Font Awesome icons (free version)-->
         <!--<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>-->
         <!-- Google fonts-->
@@ -30,8 +30,8 @@
         <!-- Third party plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet">
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-        <link href="{% static 'css/custom_styles.css' %}" rel="stylesheet">
+        <link href="{% static "css/styles.css" %}" rel="stylesheet">
+        <link href="{% static "css/custom_styles.css" %}" rel="stylesheet">
         <meta name="google-site-verification" content="u78jB1CQw0nbO84n8SiSZQDAo6D8Pitm8ZOTBbmj54c">
         <style>
             body {
@@ -54,7 +54,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aktuelles">Aktuelles</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#program">Programm</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Unterstützen</a></li>
-                        <li class="nav-item"><a class="nav-link" href="registration/">Watchpartys</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href="#" onclick="openMap()">Watchpartys</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="row h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-10 align-self-end">
                         <!--<h1 class="text-uppercase text-white font-weight-bold">Hochschultage Heidelberg 2021 DEVELOP</h1>-->
-                        <img src="{% static 'assets/img/logo_transparent.svg' %}" style="margin:-15px; max-width: 100%">
+                        <img src="{% static "assets/img/closer_logo.svg" %}" style="margin:-15px; max-width: 100%">
                         <hr class="divider my-4">
                     </div>
                     <div class="col-lg-8 align-self-baseline">
@@ -81,14 +81,14 @@
         <section class="page-section bg-dark" id="aktuelles">
             <div class="container text-light">
                 <h2>Aktuelles</h2>
-                <ul>
-                    <li>Das nächste Mitarbeitertreffen findet am Freitag, den <strong>11.06. um 18:30 Uhr</strong> <a href="https://www.tinyurl.com/hst-mitarbeiten3">hier</a> statt.</li>
+                <!--<ul>
                     <li>Am Sonntag, den <strong>20.06. um 18:00 Uhr</strong> findet der Mitarbeitergottesdienst in der
                         <a target="_blank" href="https://www.google.com/maps/place/Ev.+Hosanna+Gemeinde/@49.4084163,8.6813998,18.75z/data=!4m13!1m7!3m6!1s0x4797c12102cc514f:0xa298fb07cd62e50!2sVangerowstra%C3%9Fe+3,+69115+Heidelberg!3b1!8m2!3d49.4086676!4d8.6821964!3m4!1s0x4797c1279a11cabd:0x85089b07c2eb1cab!8m2!3d49.4086265!4d8.6818694">
                             Lutherkirche</a> statt, bitte vorher <a href="https://lgv-hd.church.tools/publicgroup/101">hier</a> anmelden.</li>
-                    <!--<iframe width="100%" style="border-width:0px" height="900px" src="https://lgv-hd.church.tools/publicgroup/101?embedded=true"></iframe>-->
-
-                </ul>
+                </ul>-->
+                Am Sonntag, den <strong>20.06. um 18:00 Uhr</strong> findet der Mitarbeitergottesdienst in der
+                <a target="_blank" href="https://www.google.com/maps/place/Ev.+Hosanna+Gemeinde/@49.4084163,8.6813998,18.75z/data=!4m13!1m7!3m6!1s0x4797c12102cc514f:0xa298fb07cd62e50!2sVangerowstra%C3%9Fe+3,+69115+Heidelberg!3b1!8m2!3d49.4086676!4d8.6821964!3m4!1s0x4797c1279a11cabd:0x85089b07c2eb1cab!8m2!3d49.4086265!4d8.6818694">
+                    Lutherkirche</a> statt, bitte vorher <a href="https://lgv-hd.church.tools/publicgroup/101">hier</a> anmelden.
             </div>
         </section>
         <section class="page-section bg-light" id="program">
@@ -126,19 +126,19 @@
                         <div class="carousel-item active" id="montag" >
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/montag.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/montag.svg" %}" class="d-block">
                                 </div>
                                 <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
                                     <div style="grid-area: 1 / 1">
                                         <h2 style="display: none">Closer to me</h2><br>
                                         <dl>
-                                            <dt >15:00&nbsp;</dt>
-                                            <dd >Volleyballturnier auf der Neckarwiese</dd>
-                                            <dt >15:30&nbsp;</dt>
-                                            <dd >Kuchenverkauf in der Hauptstraße</dd>
-                                            <dt >16:00&nbsp;</dt>
-                                            <dd >Postkartenaktion</dd>
-                                            <dt >19:00&nbsp;</dt>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
                                             <dd >
                                                 Livestream <br>
                                                 <p class="small">
@@ -150,13 +150,24 @@
                                         </dl>
                                     </div>
                                     <div style="visibility: hidden; grid-area: 1 / 1">
-                                        <h2>Close to God</h2><br>
-                                        Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                        Und mag sie für manche irrelevant und überholt klingen,
-                                        es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                        und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                        Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                        sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                 </div>
                             </div>
@@ -164,22 +175,45 @@
                         <div class="carousel-item" id="dienstag" >
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/dienstag.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/dienstag.svg" %}" class="d-block">
                                 </div>
                                 <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
                                     <div style="grid-area: 1 / 1">
-                                        <h2>Closer to the Edge</h2><br>
-                                        Am Dienstag wollen wir uns mit Enttäuschungen und persönlichen Krisen beschäftigen.
-                                        Dabei wollen wir aber auch auf Gott schauen, und erleben, wie er uns im Leid begegnet.
+                                        <h2 style="display: none">Closer to the Edge</h2><br>
+                                        <dl>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese, Special: Jugger</dd>
+                                            <dt >16:00&nbsp;</dt>
+                                            <dd >Postkarten auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Am Dienstag wollen wir uns mit Enttäuschungen und persönlichen Krisen beschäftigen.
+                                                    Dabei wollen wir aber auch auf Gott schauen, und erleben, wie er uns im Leid begegnet.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                     <div style="visibility: hidden; grid-area: 1 / 1">
-                                        <h2>Close to God</h2><br>
-                                        Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                        Und mag sie für manche irrelevant und überholt klingen,
-                                        es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                        und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                        Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                        sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                 </div>
                             </div>
@@ -187,24 +221,47 @@
                         <div class="carousel-item" id="mittwoch">
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/mittwoch.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/mittwoch.svg" %}" class="d-block">
                                 </div>
                                 <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
                                     <div style="grid-area: 1 / 1">
-                                        <h2>Closer Together</h2><br>
-                                        Beziehungen gehören zum Menschsein wie die Luft zum Atmen.
-                                        Wie kann der christliche Glaube helfen, diese Beziehungen so zu gestalten,
-                                        dass andere Lebenswelten und Unterschiede nicht nur notgedrungen ausgehalten,
-                                        sondern authentisch bejaht und in Gemeinschaft gelebt werden können?
+                                        <h2 style="display: none">Closer Together</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Beziehungen gehören zum Menschsein wie die Luft zum Atmen.
+                                                    Wie kann der christliche Glaube helfen, diese Beziehungen so zu gestalten,
+                                                    dass andere Lebenswelten und Unterschiede nicht nur notgedrungen ausgehalten,
+                                                    sondern authentisch bejaht und in Gemeinschaft gelebt werden können?
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                     <div style="visibility: hidden; grid-area: 1 / 1">
-                                        <h2>Close to God</h2><br>
-                                        Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                        Und mag sie für manche irrelevant und überholt klingen,
-                                        es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                        und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                        Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                        sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                 </div>
                             </div>
@@ -212,25 +269,46 @@
                         <div class="carousel-item" id="donnerstag">
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/donnerstag.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/donnerstag.svg" %}" class="d-block">
                                 </div>
                                 <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
                                     <div style="grid-area: 1 / 1">
-                                        <h2>Closer to Reality</h2><br>
-                                        Anders als in unseren Träumen lehrt uns die Realität, dass wir als Menschen an Grenzen stoßen.
-                                        Die Realität zeigt uns – unabhängig davon ob wir religiös sind oder nicht –,
-                                        dass wir in einer Welt leben, die eben nicht heil, sondern in Vielem kaputt und zerbrochen ist.
-                                        Die Frage ist: Hat der christliche Glaube eine Daseinsberechtigung in dieser Realität
-                                        oder ist er doch nur eine Flucht vor der Realität dieser Welt?
+                                        <h2 style="display: none">Closer to Reality</h2><br>
+                                        <dl>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese, Turniere: Volleyball, Spikeball</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Anders als in unseren Träumen lehrt uns die Realität, dass wir als Menschen an Grenzen stoßen.
+                                                    Die Realität zeigt uns – unabhängig davon ob wir religiös sind oder nicht –,
+                                                    dass wir in einer Welt leben, die eben nicht heil, sondern in Vielem kaputt und zerbrochen ist.
+                                                    Die Frage ist: Hat der christliche Glaube eine Daseinsberechtigung in dieser Realität
+                                                    oder ist er doch nur eine Flucht vor der Realität dieser Welt?
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                     <div style="visibility: hidden; grid-area: 1 / 1">
-                                        <h2>Close to God</h2><br>
-                                        Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                        Und mag sie für manche irrelevant und überholt klingen,
-                                        es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                        und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                        Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                        sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                 </div>
                             </div>
@@ -238,23 +316,44 @@
                         <div class="carousel-item" id="freitag">
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/freitag.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/freitag.svg" %}" class="d-block">
                                 </div>
                                 <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
                                     <div style="grid-area: 1 / 1">
-                                        <h2>Closer to Heaven</h2><br>
-                                        Das Seltsame am Himmel ist, dass alle ihn anscheinend toll finden, aber keiner irgendwie so recht hin will.
-                                        Das Thema heute: Warum gibt es eine Sehnsucht nach dem Himmel, nach dem Ewigen,
-                                        nach einer Heilen Welt und wie bestimmt diese Sehnsucht das Hier und Jetzt unseres Lebens?
+                                        <h2 style="display: none">Closer to Heaven</h2><br>
+                                        <dl>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Das Seltsame am Himmel ist, dass alle ihn anscheinend toll finden, aber keiner irgendwie so recht hin will.
+                                                    Das Thema heute: Warum gibt es eine Sehnsucht nach dem Himmel, nach dem Ewigen,
+                                                    nach einer Heilen Welt und wie bestimmt diese Sehnsucht das Hier und Jetzt unseres Lebens?
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                     <div style="visibility: hidden; grid-area: 1 / 1">
-                                            <h2>Close to God</h2><br>
-                                            Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                            Und mag sie für manche irrelevant und überholt klingen,
-                                            es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                            und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                            Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                            sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </div>
                                 </div>
                             </div>
@@ -262,16 +361,48 @@
                         <div class="carousel-item" id="samstag">
                             <div class="row">
                                 <div class="col day-image">
-                                    <img src="{% static 'assets/img/tage/cropped/samstag.svg' %}" class="d-block">
+                                    <img src="{% static "assets/img/tage/cropped/samstag.svg" %}" class="d-block">
                                 </div>
-                                <div class="col m-3 m-sm-5 text-light" style="width: 30vw;">
-                                    <h2>Close to God</h2><br>
-                                    Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
-                                    Und mag sie für manche irrelevant und überholt klingen,
-                                    es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
-                                    und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
-                                    Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
-                                    sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                <div class="col m-3 m-sm-5 text-light" style="width: 30vw; display: grid">
+                                    <div style="grid-area: 1 / 1">
+                                        <h2 style="display: none">Closer to Heaven</h2><br>
+                                        <dl>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
+                                                    Und mag sie für manche irrelevant und überholt klingen,
+                                                    es ist faszinierend wie diese einfache Frage seit über 2000 Jahren die Weltgeschichte beeinflusst und geprägt hat
+                                                    und auch heute noch unzählige Menschen auf allen Kontinenten dieser Welt bewegt.
+                                                    Gelehrte wie Einfache,  Reiche wie Arme, Erfolgreiche wie Gescheiterte...
+                                                    sie alle sind dieser einen Frage nachgegangen und die Antwort hat ihr Leben verändert.
+                                                </p>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div style="visibility: hidden; grid-area: 1 / 1">
+                                        <h2 style="display: none">Closer to me</h2><br>
+                                        <dl>
+                                            <dt >14:00-18:00</dt>
+                                            <dd >Kuchen auf der Neckarwiese</dd>
+                                            <dt >15:00-17:00</dt>
+                                            <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
+                                            <dt >19:00</dt>
+                                            <dd >
+                                                Livestream <br>
+                                                <p class="small">
+                                                    Wer ich bin, was mich ausmacht, ob ich genüge...
+                                                    diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
+                                                    Heute wollen wir diesen Fragen nachgehen und lernen bei mir selber anzukommen und anzunehmen, wer ich bin.
+                                                </p>
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -292,8 +423,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-5 col-sm-12">
                         <div class="mihamm">
-                            <!--<img src="{% static 'assets/img/MihammKimRauchholz.jpg' %}">-->
-                            <img src="{% static 'assets/img/MihammKimRauchholz.jpg' %}">
+                            <img src="{% static "assets/img/MihammKimRauchholz.jpg" %}">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-7 col-sm-12">
@@ -337,23 +467,23 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 text-center">
                         <div class="mt-5 pb-2 action-icon rounded-lg shadow" onclick="callModal('Mitmachen')">
                             <!--<i class="fas fa-4x fa-gem text-primary mb-4"></i>-->
-                            <img src="{% static 'assets/img/icons/collaborate.svg' %}">
+                            <img class="" src="{% static "assets/img/icons/move.svg" %}">
                             <h3 class="h4 mb-2">Mitmachen</h3>
                             <!--<p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>-->
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-                        <div class="mt-5 pb-2 action-icon rounded-lg shadow" onclick="callModal('Bewegen')">
+                        <div class="mt-5 pb-2 action-icon rounded-lg shadow" onclick="callModal('Watchparty')">
                             <!--<i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>-->
-                            <img src="{% static 'assets/img/icons/move.svg' %}">
-                            <h3 class="h4 mb-2">Bewegen</h3>
+                            <img class="" src="{% static "assets/img/icons/collaborate.svg" %}">
+                            <h3 class="h4 mb-2">Watchpartys</h3>
                             <!--<p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>-->
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6 text-center">
                         <div class="mt-5 pb-2 action-icon rounded-lg shadow" onclick="callModal('Beten')">
                             <!--<i class="fas fa-4x fa-globe text-primary mb-4"></i>-->
-                            <img src="{% static 'assets/img/icons/pray.svg' %}">
+                            <img class="" src="{% static "assets/img/icons/pray.svg" %}">
                             <h3 class="h4 mb-2">Beten</h3>
                             <!--<p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>-->
                         </div>
@@ -361,7 +491,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 text-center">
                         <div class="mt-5 pb-2 action-icon rounded-lg shadow" onclick="callModal('Finanzieren')">
                             <!--<i class="fas fa-4x fa-heart text-primary mb-4"></i>-->
-                            <img src="{% static 'assets/img/icons/donate.svg' %}" id="">
+                            <img class="" src="{% static "assets/img/icons/donate.svg" %}" id="">
                             <h3 class="h4 mb-2">Finanzieren</h3>
                             <!--<p class="text-muted mb-0">Is it really open source if it's not made with love?</p>-->
                         </div>
@@ -409,35 +539,35 @@
                     <div class="row">
                         <div class="col-6 col-sm-2 px-4 px-sm-2">
                             <a href="https://heidelberg.campus-connect.de/">
-                                <img src="{% static 'hst_logos/campus_schwarz.svg' %}" class="img-fluid" alt="Campus für Christus">
+                                <img src="{% static "hst_logos/campus_schwarz.svg" %}" class="img-fluid" alt="Campus für Christus">
                             </a>
                         </div>
                         <div class="col-6 col-sm-2 px-4 px-sm-2">
                             <a href="https://www.ec-lgv-heidelberg.de/">
-                                <img src="{% static 'hst_logos/ec_schwarz.svg' %}" class="img-fluid" alt="Entschieden für Christus">
+                                <img src="{% static "hst_logos/ec_schwarz.svg" %}" class="img-fluid" alt="Entschieden für Christus">
                             </a>
                         </div>
                         <div class="col-6 col-sm-2 px-4 px-sm-2">
                             <a href="https://www.fhsz.de/">
-                                <img src="{% static 'hst_logos/fhsz.svg' %}" class="img-fluid" alt="Friedrich-Hauß-Studienzentrum">
+                                <img src="{% static "hst_logos/fhsz.svg" %}" class="img-fluid" alt="Friedrich-Hauß-Studienzentrum">
                             </a>
                         </div>
                         <div class="col-6 col-sm-2 px-4 px-sm-2">
                             <a href="http://sfc-heidelberg.de/">
-                                <img src="{% static 'hst_logos/SfC.svg' %}" class="img-fluid" alt="Studenten für Christus">
+                                <img src="{% static "hst_logos/SfC.svg" %}" class="img-fluid" alt="Studenten für Christus">
                             </a>
                         </div>
                         <div class="col-6 col-sm-4 px-4 px-sm-2">
                             <a href="https://smd-heidelberg.de/">
-                                <img src="{% static 'hst_logos/smd_schwarz.svg' %}" class="img-fluid" alt="SMD Heidelberg">
+                                <img src="{% static "hst_logos/smd_schwarz.svg" %}" class="img-fluid" alt="SMD Heidelberg">
                             </a>
                         </div>
                     </div>
             </div>
             <div class="row mx-3 small" style="color: black">
                 <div class="col-12 col-sm-4 my-2">
-                    <a href="impressum/" style="color: black">Impressum&nbsp;</a>
-                    <a href="datenschutz/" style="color: black">Datenschutz</a>
+                    <a href="{% static "impressum/" %}" style="color: black">Impressum&nbsp;</a>
+                    <a href="{% static "datenschutz/" %}" style="color: black">Datenschutz</a>
                 </div>
                 <div class="col-12 col-sm-4 my-2">
                     Fragen? Melde dich unter <a href="mailto:kontakt@hst-heidelberg.de" style="color: black" >kontakt@hst-heidelberg.de</a>
@@ -447,10 +577,10 @@
                 </div>
             </div>
         </footer>
-        <!-- Leaflet 
+        <!-- Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-        -->
         <!-- Bootstrap core JS-->
         <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -460,7 +590,7 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <!-- Core theme JS-->
-        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static "js/scripts.js" %}"></script>
         <!-- map JS -->
 
     <script>
@@ -484,6 +614,6 @@
             });
         //});
     </script>
-    <script src="{% static 'map/locations.js' %}"></script>
+    <script src="{% static "map/locations.js" %}"></script>
     </body>
 </html>

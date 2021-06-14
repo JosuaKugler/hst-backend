@@ -1,2 +1,2 @@
-search = src="([^{:"]+)"
-replace = src="{% static '$1' %}"
+(src|href)="([^{:"#]+)"
+$1="{% static '$2' %}"

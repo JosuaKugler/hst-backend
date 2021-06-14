@@ -84,22 +84,23 @@
 
 function callModal(type) {
   $('#exampleModal').modal('show');
-  console.log(type);
   var modal = $('#exampleModal');
   modal.find('.modal-title').text(type);
   var content;
   switch (type) {
     case "Mitmachen":
       content="Komm in eine unserer Gruppen (von Evangelisationsaktionen über Anspiel, Deko und Verpflegung, creative communications und Gebet und Seelsorge ist alles dabei!), " +
-          "lerne neue Leute kennen und staune, wie sehr Gott dich in seinem Team will! <br><br> " +
+          "lerne neue Leute kennen und staune, wie sehr Gott dich in seinem Team will! " +
+          "Du hast eine coole Idee für eine spontane Aktion in der Woche? Melde dich super gerne bei uns - deine Ideen können ganz viel Freude schenken, zum Nachdenken anregen und Großes bewirken!<br><br> " +
           "Nähere Infos findest du in diesem <a href='https://docs.google.com/spreadsheets/d/1YVP8OHQj3Si_5n6vt_YnAH2GnRiqlWTv15FCpt8We-U/edit#gid=0'>Spreadsheet</a>.";
       break;
-    case "Bewegen":
-      content="Melde dich super gerne bei uns, wenn du eine spontane Aktion in der Woche starten willst - deine Ideen können ganz viel Freude schenken, zum Nachdenken anregen und Großes bewirken! <br><br> " +
-          "Tritt einfach der <a href='https://chat.whatsapp.com/Ign7NRTNrvy0AnOl3gMarH'>Whatsapp-Gruppe</a> bei oder schreib uns eine Mail: <a href='mailto:kontakt@hst-heidelberg.de'>kontakt@hst-heidelberg.de</a>.";
+    case "Watchparty":
+      content="Du hast keine Lust, die abendlichen Livestreams alleine zu schauen? Du möchtest neue Leute kennenlernen? Dann stell deine WG zur Verfügung und starte eine Watchparty!" +
+          "<!--<div style='display: flex; justify-content: center'><button class='btn btn-primary m-3' onclick=\"window.open('registration/new_watchparty')\">Watchparty starten</button></div>-->";
       break;
     case "Beten":
-      content="Bei der Vorbereitung der Hochschultage wollen wir Gott aktiv mit einbeziehen und vertrauen darauf, dass unser Gebet Kraft hat, Veränderung bringt und die Hochschultage zum Strahlen bringt!";
+      content="Bei der Vorbereitung der Hochschultage wollen wir Gott aktiv mit einbeziehen und vertrauen darauf, dass unser Gebet Kraft hat, Veränderung bringt und die Hochschultage zum Strahlen bringt! <br>" +
+          "Trag dich gerne fürs 24/7 Gebet während der Hochschultage in <a href='https://docs.google.com/spreadsheets/d/1skfjLmYJfClFqls8EgVtL6Cu5sfhe1QRXz3Zw5dzvFE/edit?usp=sharing'>diese Tabelle</a> ein.";
       break;
     case "Finanzieren":
       content="Falls du uns gerne auch finanziell bei der Bezahlung von Honoraren, Flyern, Technik & Material unterstützen willst, freuen wir uns sehr über eine Spende an <br><br>" +
