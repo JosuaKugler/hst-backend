@@ -29,7 +29,7 @@ def index(request):
     for watchparty in W_repr_list:
         plzcity = f"{watchparty.plz} {watchparty.city}"
         domain = get_current_site(request).domain
-        link = f"http://{domain}/registration/{watchparty.loc_id}/"
+        link = f"https://{domain}/registration/{watchparty.loc_id}/"
         loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link}
 
     domain = get_current_site(request).domain

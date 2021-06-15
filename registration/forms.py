@@ -32,7 +32,9 @@ class MainForm(forms.Form):
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
     wants_rapid_test = forms.BooleanField(
-        label="Ich möchte vorher einen Schnelltest machen:", required=False)
+        label="Ich möchte vorher einen Selbsttest machen:", required=False,
+        help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
+        )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 
@@ -51,8 +53,8 @@ class WatchpartyForm(forms.Form):
     email = forms.EmailField(label="E-Mail-Adresse")
     
     plz = forms.CharField(max_length=5, label="Postleitzahl")
-    city = forms.CharField(max_length=200)
-    street = forms.CharField(max_length=200)
+    city = forms.CharField(max_length=200, label="Stadt")
+    street = forms.CharField(max_length=200, label="Straße, Hausnummer")
     # maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
     max_place_num = forms.IntegerField(label="Wie viele Menschen passen in deine WG? (Inklusive dir und deinen Mitbewohnern)")
     wg_people_num = forms.IntegerField(label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")

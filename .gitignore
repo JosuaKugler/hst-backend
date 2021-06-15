@@ -9,3 +9,4 @@ collect_static/
 gunicorn.access.log
 gunicorn.error.log
 docker_build.sh
+database-vol
