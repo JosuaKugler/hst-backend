@@ -32,7 +32,9 @@ def index(request):
         link = f"http://{domain}/registration/{watchparty.loc_id}/"
         loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link}
 
-    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict})
+    domain = get_current_site(request).domain
+
+    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict, 'domain': domain})
 
 def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id
@@ -131,7 +133,7 @@ def activate(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+        user = None 
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
