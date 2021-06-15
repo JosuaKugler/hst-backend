@@ -19,7 +19,21 @@ COPY . /app
 RUN rm -rf collect_static
 RUN python3 manage.py collectstatic
 RUN python3 manage.py makemigrations
-RUN python3 manage.py migrate
+RUN python3 manage.py migrate --noinput
+
+#create admin
+ARG DJANGO_SUPERUSER_USERNAME=admin
+ARG DJANGO_SUPERUSER_EMAIL=admin@my.company
+ARG DJANGO_SUPERUSER_PASSWORD=mypass
+
+RUN python3 manage.py createsuperuser --noinput
+
+#RUN python -c "import django; django.setup(); settings.configure();\
+#   from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
+#   get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
+#   username='$DJANGO_SU_NAME', \
+#   email='$DJANGO_SU_EMAIL', \
+#   password='$DJANGO_SU_PASSWORD')"
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers

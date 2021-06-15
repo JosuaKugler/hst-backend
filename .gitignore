@@ -8,3 +8,4 @@ collect_static/
 .vscode
 gunicorn.access.log
 gunicorn.error.log
+docker_build.sh
