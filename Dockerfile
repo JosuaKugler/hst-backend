@@ -29,6 +29,10 @@ ARG DJANGO_SUPERUSER_PASSWORD=mypass
 
 RUN python3 manage.py createsuperuser --noinput
 
+#set timezone
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 #RUN python -c "import django; django.setup(); settings.configure();\
 #   from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
 #   get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
@@ -44,4 +48,4 @@ USER appuser
 
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "backend.wsgi:application"]
