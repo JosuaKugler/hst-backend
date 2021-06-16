@@ -68,7 +68,7 @@ def register(request, watchparty_loc_id):
     for watchparty in watchparty_list:
         if get_free_vaccinated(watchparty) > 0:
             new_watchparty_list.append(watchparty)
-        if get_free_unvaccinated(watchparty) > 0:
+        if get_free_unvaccinated(watchparty) <= 0:
             only_vaccinated_list.append(watchparty)
 
     watchparty_list = new_watchparty_list # others are not relevant, because they are full
