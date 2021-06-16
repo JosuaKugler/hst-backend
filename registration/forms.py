@@ -32,12 +32,49 @@ class MainForm(forms.Form):
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
     wants_rapid_test = forms.BooleanField(
-        label="Ich möchte vorher einen Selbsttest machen:", required=False,
+        label="Ich möchte vorher einen Selbsttest machen", required=False,
         help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
         )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 
+
+class SameHouseholdForm(forms.Form):
+    # pass attrs to add classes or styling to the fields
+    def __init__(self, *args, **kwargs):
+        # get watchparty_list in order to display selectable watchparty days
+        self.watchparty_list = kwargs.pop('watchparty_list')
+        self.only_vaccinated_list = kwargs.pop('only_vaccinated_list')
+        newCHOICES = []
+        week = [
+            'Montag',
+            'Dienstag',
+            'Mittwoch',
+            'Donnerstag',
+            'Freitag',
+            'Samstag',
+            'Sonntag']
+        for i, watchparty in enumerate(self.watchparty_list):
+            weekday = week[watchparty.day.weekday()]
+            if watchparty in self.only_vaccinated_list:
+                weekday = str(weekday) + " (nur für Geimpfte!)"
+            newCHOICES.append((i, weekday))
+        super(MainForm, self).__init__(*args, **kwargs)
+        self.fields['days'].choices = newCHOICES
+
+    CHOICES = [('1', 'FATAL ERROR')]
+    first_name = forms.CharField(label="Vorname", max_length=200)
+    last_name = forms.CharField(label="Nachname", max_length=200)
+    email = forms.EmailField(label="E-Mail-Adresse")
+    #address = forms.CharField(label="Adresse", max_length=200)
+    is_vaccinated = forms.BooleanField(
+        label="Geimpft oder Genesen?", required=False)
+    wants_rapid_test = forms.BooleanField(
+        label="Ich möchte vorher einen Selbsttest machen", required=False,
+        help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
+        )
+    days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                     choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 
 class WatchpartyForm(forms.Form):
     CHOICES = [

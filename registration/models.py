@@ -2,15 +2,20 @@ from enum import unique
 from django.db import models
 
 # Create your models here.
+
+class Household(models.Model):
+    token = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+
 class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField()
-    address = models.CharField(max_length=200)
     is_vaccinated = models.BooleanField()
     wants_rapid_test = models.BooleanField()
-    haushalt_id = models.IntegerField()
+    household = models.ForeignKey(Household, on_delete=models.CASCADE)
     is_active = models.BooleanField()
+    creation_date = models.DateTimeField()
     
 class Watchparty(models.Model):
     loc_id = models.IntegerField() #watchpartys at the same place get the same id
@@ -26,9 +31,11 @@ class Watchparty(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.EmailField()
     is_active = models.BooleanField()
+    is_confirmed = models.BooleanField()
+    creation_date = models.DateTimeField()
 
 class Registration(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     watchparty = models.ForeignKey(Watchparty, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField()
     #constraints = [models.UniqueConstraint(fields=['user', 'watchparty'], name='unique_user_watchpary')]
-
