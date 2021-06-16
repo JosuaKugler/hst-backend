@@ -132,7 +132,7 @@ def register(request, watchparty_loc_id):
     else:
         form = MainForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
 
-    context = {'form': form, 'watchparty_list': watchparty_list, ''}
+    context = {'form': form, 'watchparty_list': watchparty_list}
     return render(request, 'registration/registration.html', context)
 
 def register_with_household_id(request, household_pk_uidb64, token):
