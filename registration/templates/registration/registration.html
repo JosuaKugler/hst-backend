@@ -16,19 +16,23 @@
     </head>
     <body class="bg-dark p-3">
         <div class="container bg-light p-3">
-        <h2>Anmeldung Watchparty</h2>
-        <h3>Adresse</h3>
-        <p>
-            {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->
-            {{ watchparty_list.0.plz }} {{ watchparty_list.0.city }}
-        </p>
-        <h3>Deine Daten</h3>
-        <form action="{% url 'register' watchparty_list.0.loc_id %}" method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <!--<button class="btn btn-primary">Weitere Person aus demselben Haushalt hinzufügen</button>-->
+            <h2>Anmeldung Watchparty</h2>
+            {% if (watchparty_list|length > 0) %}
+            <h3>Adresse</h3>
+            <p>
+                {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->
+                {{ watchparty_list.0.plz }} {{ watchparty_list.0.city }}
+            </p>
+            <h3>Deine Daten</h3>
+            <form action="{% url 'register' watchparty_list.0.loc_id %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
             <button class="btn btn-primary" type="submit">Anmelden</button>
             </form>
+            {% else %}
+            <p>Sorry, diese Watchparty ist leider schon ausgebucht.</p>
+            <p>Melde dich gerne bei einer anderen Watchparty an!</p>
+            {% endif %}
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>

@@ -24,8 +24,8 @@ class Watchparty(models.Model):
     city = models.CharField(max_length=200)
     street = models.CharField(max_length=200)
     day = models.DateField(max_length=200)
-    max_place_num = models.IntegerField() #maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
-    wg_people_num = models.IntegerField() #Anzahl der Personen in der Veranstalter-WG
+    max_place_num = models.IntegerField() #maximale Anzahl an Personen, die zusätzlich in die WG passen (ohne Veranstalter-WG)
+    wg_people_num = models.IntegerField() #Anzahl der Personen in der Veranstalter-WG ohne geimpfte
     #host info
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)

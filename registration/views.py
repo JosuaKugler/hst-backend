@@ -1,5 +1,4 @@
 from datetime import date, datetime
-from django.forms.widgets import HiddenInput
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Max
@@ -49,19 +48,15 @@ def register(request, watchparty_loc_id):
     new_watchparty_list = []
     only_vaccinated_list = []
 
+    
+
     for watchparty in watchparty_list:
-        if get_total_people(watchparty) < watchparty.max_place_num - watchparty.wg_people_num: # there is still space
+        if get_free_vaccinated(watchparty) > 0:
             new_watchparty_list.append(watchparty)
-            if get_non_vaccined(watchparty) < max_people and get_households(watchparty) < max_households:
-                pass # open for all
-            else:
-                only_vaccinated_list.append(watchparty)
+        if get_free_unvaccinated(watchparty) > 0:
+            only_vaccinated_list.append(watchparty)
 
     watchparty_list = new_watchparty_list # others are not relevant, because they are full
-
-    #create warning for template
-    for watchparty in watchparty_list:
-        pass
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -76,7 +71,7 @@ def register(request, watchparty_loc_id):
             #create User:
             address = form.cleaned_data['address']
             token_base = address + str(random.randint(100000,1000000))
-            token = hashlib.sha256(token_base).hexdigest()
+            token = hashlib.sha256(bytes(token_base, 'utf-8')).hexdigest()
 
             household = Household(
                 address = address,
@@ -171,21 +166,20 @@ def register_with_household_id(request, household_pk_uidb64, token):
     only_vaccinated_list = []
 
     for watchparty in watchparty_list:
-        if get_total_people(watchparty) < watchparty.max_place_num - watchparty.wg_people_num: # there is still space
+        if get_free_vaccinated(watchparty) > 0:
             new_watchparty_list.append(watchparty)
-            if get_non_vaccined(watchparty) < max_people and get_households(watchparty) < max_households:
-                pass # open for all
+            current_household_already_on_watchparty = False
+            for registration in Registration.objects.filter(watchparty=watchparty):
+                if household == registration.user.household:
+                    current_household_already_on_watchparty = True
+            if current_household_already_on_watchparty:
+                free_households = get_free_households(watchparty) + 1
             else:
+                free_households = get_free_households(watchparty)
+            if free_households <= 0 or get_free_unvaccinated(watchparty, check_households=False) <= 0: #no unvaccinated can access
                 only_vaccinated_list.append(watchparty)
 
     watchparty_list = new_watchparty_list # others are not relevant, because they are full
-
-    #create warning for template
-    for watchparty in watchparty_list:
-        pass
-
-    ###################################### WAS SOLLTE DAS?? 
-
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -244,7 +238,7 @@ def register_with_household_id(request, household_pk_uidb64, token):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = MainForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
+        form = SameHouseholdForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
 
     context = {'form': form, 'watchparty_list': watchparty_list, 'household_pk_uidb64': household_pk_uidb64, 'token':token}
     return render(request, 'registration/registration_same_household.html', context)
@@ -339,14 +333,14 @@ def watchparty_registration_success(request, loc_id):
     context = {'watchparty_list': watchparty_list}
     return render(request, 'registration/watchparty_registration_success.html', context)
 
-def watchparty_activate(request, uidb64, token):
+def watchparty_activate(request, uidb64, email_token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         watchparty = Watchparty.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         watchparty = None
 
-    if watchparty is not None and account_activation_token.check_token(watchparty, token):
+    if watchparty is not None and account_activation_token.check_token(watchparty, email_token):
         watchparty_list = get_list_or_404(Watchparty, loc_id = watchparty.loc_id)
         context = {'watchparty_list': watchparty_list}
         for watchparty in watchparty_list:
@@ -471,3 +465,50 @@ def get_households(watchparty):
                 households.append(registration.user.household)
 
     return len(households)
+
+
+def get_free_households(watchparty):
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    households = []
+    for registration in registrations:
+        #if registration.user.is_active:
+        #    if not registration.user.is_vaccinated:
+        #        if not registration.user.haushalt_id in households:
+        #           households.append(registration.user.haushalt_id)
+        if not registration.user.is_vaccinated:
+            if not registration.user.household in households:
+                households.append(registration.user.household)
+    
+    household_num = len(households)
+    if watchparty.wg_people_num > 0:
+        household_num = household_num + 1
+    
+    return max_households - household_num
+
+def get_free_vaccinated(watchparty):
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    cnt = 0
+    for registration in registrations:
+        #if registration.user.is_active:
+        #    cnt += 1
+        cnt += 1
+    return watchparty.max_place_num - cnt
+
+
+def get_free_unvaccinated(watchparty, check_households = True):
+    if check_households:
+        if get_free_households(watchparty) <= 0:
+            return 0
+    registrations = Registration.objects.filter(watchparty=watchparty)
+    unvaccinated_cnt = 0
+    for registration in registrations:
+        #if registration.user.is_active:
+        #    if not registration.user.is_vaccinated:
+        #        cnt += 1
+        if not registration.user.is_vaccinated:
+            unvaccinated_cnt += 1
+    
+    unvaccinated_cnt += watchparty.wg_people_num
+    free_unvaccinated_cnt = max_people - unvaccinated_cnt
+    return min(get_free_vaccinated(watchparty), free_unvaccinated_cnt) #min( people that fit into the wg, people according to covid regulations)
+

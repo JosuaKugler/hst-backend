@@ -14,7 +14,7 @@ urlpatterns = [
     path('registration_success/<int:user_id>/',
          views.registration_success, name='registration_success'),
     # /registration/activate/slödfkj/aölskdfj/
-    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('activate/<uidb64>/<email_token>/', views.activate, name='activate'),
     # /registration/new_watchparty/
     path('new_watchparty/', views.new_watchparty, name='new_watchparty'),
     path('watchparty_activate/<uidb64>/<email_token>/',

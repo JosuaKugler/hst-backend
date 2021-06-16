@@ -28,6 +28,8 @@ ARG DJANGO_SUPERUSER_EMAIL=admin@my.company
 ARG DJANGO_SUPERUSER_PASSWORD=mypass
 
 RUN python3 manage.py createsuperuser --noinput
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate --noinput
 
 #set timezone
 ENV TZ=Europe/Berlin
