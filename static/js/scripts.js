@@ -96,7 +96,7 @@ function callModal(type) {
       break;
     case "Watchparty":
       content="Du hast keine Lust, die abendlichen Livestreams alleine zu schauen? Du möchtest neue Leute kennenlernen? Dann stell deine WG zur Verfügung und starte eine Watchparty!" +
-          "<!--<div style='display: flex; justify-content: center'><button class='btn btn-primary m-3' onclick=\"window.open('registration/new_watchparty')\">Watchparty starten</button></div>-->";
+          "<div style='display: flex; justify-content: center'><button class='btn btn-primary m-3' onclick=\"window.open('registration/new_watchparty')\">Watchparty starten</button></div>";
       break;
     case "Beten":
       content="Bei der Vorbereitung der Hochschultage wollen wir Gott aktiv mit einbeziehen und vertrauen darauf, dass unser Gebet Kraft hat, Veränderung bringt und die Hochschultage zum Strahlen bringt! <br>" +
