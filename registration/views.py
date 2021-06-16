@@ -38,7 +38,7 @@ def index(request):
             freie Haushalte: { get_free_households(watchparty) }<br>
             freie Plätze: { get_free_vaccinated(watchparty) } (davon bis zu { get_free_unvaccinated(watchparty) } verfügbar für nicht Geimpfte)
             """
-        if (get_free_vaccinated(watchparty)) <= 0:
+        if (get_free_vaccinated(watchparty)) >= 0:
             popup_str += f"<br><a href=' { link } '>Anmeldung</a>"
 
         if get_free_unvaccinated(watchparty) > 0:
