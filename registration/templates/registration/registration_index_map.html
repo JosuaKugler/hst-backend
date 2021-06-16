@@ -124,7 +124,7 @@
                         if (value.color == 'yellow') idict = { icon: yellowIcon }
                         if (value.color == 'red') idict = { icon: redIcon }
 
-                        L.marker([lat, lon], idict).addTo(map).bindPopup(popup_str, {maxWidth: 'auto'});
+                        L.marker([lat, lon], idict).addTo(map).bindPopup(popup_str, {maxWidth: 0.5*screen.width});
                     }
                 );
             }
