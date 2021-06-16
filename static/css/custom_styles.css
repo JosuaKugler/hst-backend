@@ -2,33 +2,39 @@
     padding: 6px 8px;
     opacity: .85;
     line-height: 24px;
-  }
-  .legend h4 {
+}
+
+.legend h4 {
     text-align: center;
     font-size: 16px;
     margin: 2px 12px 8px;
     color: #777;
-  }
-  /*
-  .legend span {
-    position: relative;
-    bottom: 3px;
-  }
-  */
-  
-  .legend i {
+}
+
+.legend i {
     width: 18px;
     height: 18px;
     float: left;
     margin: 0 8px 0 0;
     opacity: 0.7;
-  }
-  
-  .legend i.icon {
+}
+
+.legend i.icon {
     background-size: 18px;
     background-color: rgba(255, 255, 255, 1);
-  }
+}
 
+@media (min-width: 800px) {
+    .leaflet-popup-content {
+        width:250px;
+    }
+}
+
+@media (max-width: 799px) {
+    .leaflet-popup-content {
+        width:150px;
+    }
+}
 
 body {
     font-family: "Merriweather Sans";
@@ -73,12 +79,14 @@ body {
         padding: 8px 8px 8px 8px;
     }
 }
+
 @media (max-width: 330px) {
     .day {
         margin: 0;
         padding: 8px 4px 8px 4px;
     }
 }
+
 /*
 mobile devices with less than 282 pixel screenwidth have to scroll :(
  */
@@ -99,7 +107,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
     }
     .days-navbar-container {
         z-index: 1030;
-        background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1) 10%, rgba(255,255,255,1) 60%, rgba(255,255,255,.3) 70%, rgba(0,0,0,0));
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, .3) 70%, rgba(0, 0, 0, 0));
     }
 }
 
@@ -112,13 +120,13 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
     .days-navbar-container {
         padding: 0 15px 0 15px;
     }
-
     #navList {
         flex-wrap: nowrap;
     }
 }
 
 /* Large desktops and laptops */
+
 @media (min-width: 1200px) {
     .day-image {
         padding: 10vw 5vw 10vw 5vw;
@@ -130,6 +138,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
 }
 
 /* Landscape tablets and medium desktops */
+
 @media (min-width: 992px) and (max-width: 1199px) {
     .day-image {
         padding: 10vw 5vw 10vw 5vw;
@@ -141,6 +150,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
 }
 
 /* Portrait tablets and small desktops */
+
 @media (min-width: 768px) and (max-width: 991px) {
     .day-image {
         padding: 5vw 5vw 2vw 5vw;
@@ -152,6 +162,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
 }
 
 /* Landscape phones and portrait tablets */
+
 @media (max-width: 767px) {
     .day-image {
         visibility: hidden;
@@ -163,6 +174,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
 }
 
 /* Portrait phones and smaller */
+
 @media (max-width: 480px) {
     .day-image {
         visibility: hidden;
