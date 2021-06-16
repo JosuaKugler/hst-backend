@@ -32,7 +32,16 @@ def index(request):
         plzcity = f"{watchparty.plz} {watchparty.city}"
         domain = get_current_site(request).domain
         link = f"https://{domain}/registration/{watchparty.loc_id}/"
-        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link}
+        popup_str = f"""<strong> {watchparty.plz} {watchparty.city} </strong><br>
+            { watchparty.street } <br>
+            <br>
+            freie Haushalte: { get_free_households(watchparty) }<br>
+            freie Plätze: { get_free_vaccinated(watchparty) } (davon bis zu { get_free_unvaccinated(watchparty) } verfügbar für nicht Geimpfte)
+            """
+        if (get_free_vaccinated(watchparty)) <= 0:
+            popup_str += f"<br><a href=' { link } '>Anmeldung</a>"
+            
+        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link, "popup_str": popup_str}
 
     domain = get_current_site(request).domain
 

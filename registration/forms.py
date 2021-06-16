@@ -87,7 +87,7 @@ class WatchpartyForm(forms.Form):
     ]
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
-    email = forms.EmailField(label="E-Mail-Adresse")
+    email = forms.EmailField(label="E-Mail-Adresse", help_text="Vorname, Nachname und Email werden an die Teilnehmer der Watchparty weitergegeben.")
     
     plz = forms.CharField(max_length=5, label="Postleitzahl")
     city = forms.CharField(max_length=200, label="Stadt")

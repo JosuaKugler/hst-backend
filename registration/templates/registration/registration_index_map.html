@@ -88,8 +88,9 @@
                         console.log(data);
                         lon = data[0].lon;
                         lat = data[0].lat;
-                        var popupStr = '<strong>' + value.plzcity + '</strong><br>' + value.street + '<br><br>' + '<a href="' + value.link + '">Anmeldung</a>'
-                        L.marker([lat, lon], { icon: yellowIcon }).addTo(map).bindPopup(popupStr);
+                        //var popupStr = '<strong>' + value.plzcity + '</strong><br>' + value.street + '<br><br>' + '<a href="' + value.link + '">Anmeldung</a>'
+                        var popup_str = value.popup_str
+                        L.marker([lat, lon], { icon: yellowIcon }).addTo(map).bindPopup(popup_str);
                     }
                 );
             }
