@@ -8,7 +8,7 @@ urlpatterns = [
     # /registration/23/
     path('<int:watchparty_loc_id>/', views.register, name='register'),
     # /registration/household/wM/asldfjasdfsdlfölfj/
-    path('/household/<household_pk_uidb64>/<token>/',
+    path('household/<household_pk_uidb64>/<token>/',
          views.register_with_household_id, name='register_with_household_id'),
     # /registration_success/2/
     path('registration_success/<int:user_id>/',
