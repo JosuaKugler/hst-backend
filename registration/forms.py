@@ -31,10 +31,10 @@ class MainForm(forms.Form):
     address = forms.CharField(label="Adresse", max_length=200)
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
-    wants_rapid_test = forms.BooleanField(
-        label="Ich möchte vorher einen Selbsttest machen", required=False,
-        help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
-        )
+    #wants_rapid_test = forms.BooleanField(
+    #    label="Ich möchte vorher einen Selbsttest machen", required=False,
+    #    help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
+    #    )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 
@@ -69,10 +69,10 @@ class SameHouseholdForm(forms.Form):
     #address = forms.CharField(label="Adresse", max_length=200)
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
-    wants_rapid_test = forms.BooleanField(
-        label="Ich möchte vorher einen Selbsttest machen", required=False,
-        help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
-        )
+    #wants_rapid_test = forms.BooleanField(
+    #    label="Ich möchte vorher einen Selbsttest machen", required=False,
+    #    help_text="Wir stellen dir Selbsttests zur Verfügung, sodass du dich direkt vor der Watchparty testen kannst."
+    #    )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 

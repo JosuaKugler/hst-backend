@@ -99,7 +99,8 @@ def register(request, watchparty_loc_id):
                 last_name = form.cleaned_data['last_name'],
                 email = form.cleaned_data['email'],
                 is_vaccinated = form.cleaned_data['is_vaccinated'],
-                wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                #wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                wants_rapid_test = False,
                 household = household,
                 is_active = False,
                 creation_date = datetime.today() #returns time
@@ -212,7 +213,8 @@ def register_with_household_id(request, household_pk_uidb64, token):
                 last_name = form.cleaned_data['last_name'],
                 email = form.cleaned_data['email'],
                 is_vaccinated = form.cleaned_data['is_vaccinated'],
-                wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                #wants_rapid_test = form.cleaned_data['wants_rapid_test'],
+                wants_rapid_test = False,
                 household = household,
                 creation_date = datetime.today(),
                 is_active = False
