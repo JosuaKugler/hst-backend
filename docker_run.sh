@@ -1,9 +1,8 @@
 #!/bin/bash
 docker stop hst_backend
 docker rm hst_backend
-docker run \
-  -v /root/DockerMounts/HSTBackend/:/app/database-vol/ \
-  -p 62356:8000 \
+docker run -d \
+  --mount source=database-vol,target=/app/database-vol/ \
+  -p 8000:8000 \
   --name hst_backend \
-  -d \
-  kuglerjosua/hst_backend:3
+  hst_backend
