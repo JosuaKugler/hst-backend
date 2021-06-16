@@ -1,4 +1,8 @@
 #!/bin/bash
+#if __init__.py doesn't exist database may not be set up
+mkdir registration/migrations
+touch registration/migrations/__init__.py
+
 docker build \
 --build-arg DJANGO_SUPERUSER_USERNAME='user' \
 --build-arg DJANGO_SUPERUSER_EMAIL='user@example.com' \

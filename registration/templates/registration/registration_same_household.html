@@ -17,7 +17,7 @@
     <body class="bg-dark p-3">
         <div class="container bg-light p-3">
             <h2>Anmeldung Watchparty</h2>
-            {% if (watchparty_list|length > 0) %}
+            {% if watchparty_list|length > 0 %}
             <h3>Adresse</h3>
             <p>
                 {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->

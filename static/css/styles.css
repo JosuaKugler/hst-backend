@@ -10105,7 +10105,7 @@ hr.light {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, rgba(52, 58, 64, 0.7) 0%, rgba(52, 58, 64, 0.8) 100%), url("../assets/img/berge_2_smaller.jpg");
+  background: linear-gradient(to bottom, rgba(52, 58, 64, 0.7) 0%, rgba(52, 58, 64, 0.8) 100%), url("../assets/img/berge_2.jpg");
   /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.7) 0%, rgba(92, 77, 66, 0.8) 100%), url("../assets/img/berge_2_smaller.jpg");*/
   /*background: url('../assets/img/berge_2_smaller.jpg');*/
   background-position: center;

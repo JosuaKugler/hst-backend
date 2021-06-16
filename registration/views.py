@@ -40,8 +40,14 @@ def index(request):
             """
         if (get_free_vaccinated(watchparty)) <= 0:
             popup_str += f"<br><a href=' { link } '>Anmeldung</a>"
-            
-        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link, "popup_str": popup_str}
+
+        if get_free_unvaccinated(watchparty) > 0:
+            color = "green"
+        elif get_free_vaccinated(watchparty) > 0:
+            color = "yellow"
+        else:
+            color = "red"
+        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link, "popup_str": popup_str, "color": color}
 
     domain = get_current_site(request).domain
 
