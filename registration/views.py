@@ -31,7 +31,7 @@ def index(request):
     for watchparty in W_repr_list:
         plzcity = f"{watchparty.plz} {watchparty.city}"
         domain = get_current_site(request).domain
-        link = f"https://{domain}/registration/{watchparty.loc_id}/"
+        link = f"{ request.scheme }://{domain}/registration/{watchparty.loc_id}/"
         popup_str = f"""<strong> {watchparty.plz} {watchparty.city} </strong><br>
             { watchparty.street } <br>
             <br>
@@ -51,7 +51,7 @@ def index(request):
 
     domain = get_current_site(request).domain
 
-    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict, 'domain': domain})
+    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict, 'domain': domain, 'scheme': request.scheme })
 
 def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id
@@ -291,9 +291,9 @@ def activate(request, uidb64, email_token):
         user_token = user.token
 
         household_link = f"{scheme}://{domain}/registration/household/{household_pk}/{household_token}/"
-        edit_link = f"https://{domain}/registration/edit/{user_pk}/{user_token}/"
+        edit_link = f"{ scheme }://{domain}/registration/edit/{user_pk}/{user_token}/"
 
-        send_user_confirmation_email(user, watchparty_list, domain, household_link, edit_link)
+        send_user_confirmation_email(user, watchparty_list, household_link, edit_link)
         context = {'watchparty_list': watchparty_list, 'household_link': household_link, 'edit_link': edit_link}
         return render(request, 'registration/activate.html', context)
     else:
@@ -305,7 +305,7 @@ def new_watchparty(request):
         form = WatchpartyForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # deal with request.POST data here, see https://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
+            # deal with request.POST data here, see { request.scheme }://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
             # then redirect to successful registration page with validation email info
             # process the data in form.cleaned_data as required
             
@@ -372,7 +372,7 @@ def watchparty_activate(request, uidb64, email_token):
         uidb = urlsafe_base64_encode(force_bytes(watchparty.loc_id))
         token = watchparty.token
 
-        info_link = f"{scheme}://{domain}/info/{uidb}/{token}/"
+        info_link = f"{scheme}://{domain}/registration/info/{uidb}/{token}/"
 
         context = {'watchparty_list': watchparty_list, "info_link":info_link }
         for watchparty in watchparty_list:
@@ -448,14 +448,13 @@ def send_email_validation_email(obj, domain, type_activate):
         #html_message=htmlmessage, 
         fail_silently=False)
 
-def send_user_confirmation_email(user, watchparty_list, domain, household_link, edit_link):
+def send_user_confirmation_email(user, watchparty_list, household_link, edit_link):
     subject = 'Anmeldung Hochschultage Watchparty'
     context = {
         'user': user,
         'watchparty_list': watchparty_list,
         #'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         #'token': account_activation_token.make_token(user),
-        'domain': domain,
         'household_link': household_link,
         'edit_link': edit_link,
     }
