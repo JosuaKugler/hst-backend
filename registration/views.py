@@ -8,13 +8,11 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.regex_helper import Choice
-from geopy import Nominatim
 import secrets
 
 from .models import Household, Watchparty, User, Registration
-from .forms import MainForm, SameHouseholdForm, WatchpartyForm
+from .forms import EditForm, MainForm, SameHouseholdForm, WatchpartyForm
 from .tokens import account_activation_token
-from registration import models
 
 #corona-rules:
 max_people = 10
@@ -47,7 +45,7 @@ def index(request):
             color = "yellow"
         else:
             color = "red"
-        loc_dict[watchparty.loc_id] = {"plzcity": plzcity, "street": watchparty.street, "link": link, "popup_str": popup_str, "color": color}
+        loc_dict[watchparty.loc_id] = {"link": link, "popup_str": popup_str, "color": color, "latitude": watchparty.latitude, "longitude": watchparty.longitude}
 
     domain = get_current_site(request).domain
 
@@ -56,9 +54,9 @@ def index(request):
 def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id
     if watchparty_list[0].is_active == False:
-        return HttpResponse('Die Mailadresse des Watchparty-Gastgebers wurde noch nicht bestätigt.')
+        return HttpResponse('ERROR 108: Die Mailadresse des Watchparty-Gastgebers wurde noch nicht bestätigt.')
     if watchparty_list[0].is_confirmed == False:
-        return HttpResponse('Die Watchparty wurde noch nicht freigegeben.')    
+        return HttpResponse('ERROR 109: Die Watchparty wurde noch nicht freigegeben.')    
     
     new_watchparty_list = []
     only_vaccinated_list = []
@@ -108,9 +106,11 @@ def register(request, watchparty_loc_id):
             # get all watchpartys the user registered for
             days = form.cleaned_data['days']
             
+            print(days)
+
             selected_watchpartys = []
             for watchparty in watchparty_list:
-                #print(watchparty.day.weekday())
+                print(watchparty.day.weekday())
                 if str(watchparty.day.weekday()) in days:
                     if not user.is_vaccinated: #if user isn't vaccinated, a selected watchparty musn't be only_vaccinated
                         if not (watchparty in only_vaccinated_list):
@@ -225,14 +225,13 @@ def register_with_household_id(request, household_pk_uidb64, token):
             
             selected_watchpartys = []
             for watchparty in watchparty_list:
-                #print(watchparty.day.weekday())
                 if str(watchparty.day.weekday()) in days:
                     if not user.is_vaccinated: #if user isn't vaccinated, a selected watchparty musn't be only_vaccinated
                         if not (watchparty in only_vaccinated_list):
                             selected_watchpartys.append(watchparty)
                     else:
                         selected_watchpartys.append(watchparty)
-            
+
             if not selected_watchpartys:
                 return HttpResponse("ERROR 106: Diese Watchparty ist nur für Geimpfte/Genesene noch verfügbar")
 
@@ -395,7 +394,124 @@ def user_edit(request, uidb64, token):
     if user is None or str(user.token) != str(token):
         return HttpResponse("ERROR 107: User Edit Link ist ungültig.")
     
-    return HttpResponse("User Edit View")
+    registrations = get_list_or_404(Registration, user = user)
+    repr_registration = registrations[0]
+    loc_id = repr_registration.watchparty.loc_id
+    watchparty_list = get_list_or_404(Watchparty, loc_id=loc_id) #get all watchpartys with loc_id
+
+    if watchparty_list[0].is_active == False:
+        return HttpResponse('ERROR 110: Die Mailadresse des Watchparty-Gastgebers wurde noch nicht bestätigt.')
+    if watchparty_list[0].is_confirmed == False:
+        return HttpResponse('ERROR 111: Die Watchparty wurde noch nicht freigegeben.')    
+    
+    available_list = []
+    registered_list = []
+    days = []
+
+    for registration in registrations: # reminder: registrations sind alle, wo dieser user drin ist
+        registered_list.append(registration.watchparty)
+        days.append(str(registration.watchparty.day.weekday()))
+
+    if user.is_vaccinated:
+        for watchparty in watchparty_list:
+            if get_free_vaccinated(watchparty) > 0:
+                available_list.append(watchparty)
+    else:
+        for watchparty in watchparty_list:
+            if get_free_unvaccinated(watchparty) > 0:
+                available_list.append(watchparty)
+    # others are not relevant, because they are full
+
+
+
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = EditForm(request.POST, registered_list=registered_list, available_list=available_list, initial={'days': days})
+        # check whether it's valid:
+        if form.is_valid():
+            # deal with request.POST data here, see https://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
+            # then redirect to successful registration page with validation email info
+            # process the data in form.cleaned_data as required
+            
+
+            # get all watchpartys the user registered for
+            days = form.cleaned_data['days']
+            
+            print(days)
+
+            newly_selected_watchpartys = []
+            for watchparty in watchparty_list:
+                if str(watchparty.day.weekday()) in days and watchparty not in registered_list:
+                    newly_selected_watchpartys.append(watchparty)
+            
+            newly_unselected_watchpartys = []
+            for watchparty in registered_list:
+                if str(watchparty.day.weekday()) not in days:
+                    newly_unselected_watchpartys.append(watchparty)
+
+            # validation
+            
+            if user.is_vaccinated:
+                for watchparty in newly_selected_watchpartys:
+                    if get_free_vaccinated(watchparty) <= 0:
+                        return HttpResponse("ERROR 112: Du hast versucht, dich zu Watchpartys anzumelden, in denen kein Platz mehr ist.")
+            else:
+                for watchparty in newly_selected_watchpartys:
+                    if get_free_unvaccinated(watchparty) <= 0:
+                        return HttpResponse("ERROR 113: Du hast versucht, dich zu Watchpartys anzumelden, in denen kein Platz mehr ist.")
+            
+
+            #create registration objects
+            for watchparty in newly_selected_watchpartys:
+                registration = Registration(
+                    user = user,
+                    watchparty = watchparty,
+                    creation_date = datetime.today()
+                )
+                registration.save()
+            
+            #delete registration objects
+            for watchparty in newly_unselected_watchpartys:
+                Registration.objects.filter(user = user).filter(watchparty = watchparty).delete()
+
+
+            if len(Registration.objects.filter(user = user)) == 0:
+                User.objects.filter(pk=user.pk).delete()
+                return HttpResponse("Du hast dich von allen Terminen dieser Watchparty abgemeldet.")
+
+               
+
+            #do email stuff
+            domain = get_current_site(request).domain
+            scheme = request.scheme
+
+            household = user.household
+            household_pk = urlsafe_base64_encode(force_bytes(household.pk))
+            household_token = household.token
+
+            user_pk = urlsafe_base64_encode(force_bytes(user.pk))
+            user_token = user.token
+
+            household_link = f"{scheme}://{domain}/registration/household/{household_pk}/{household_token}/"
+            edit_link = f"{ scheme }://{domain}/registration/edit/{user_pk}/{user_token}/"
+
+            selected_watchpartys = []
+            registrations = get_list_or_404(Registration, user = user)
+            for registration in registrations:
+                selected_watchpartys.append(registration.watchparty)
+
+            send_user_confirmation_email(user, selected_watchpartys, household_link, edit_link)
+            context = {'watchparty_list': selected_watchpartys, 'household_link': household_link, 'edit_link': edit_link}
+            return render(request, 'registration/activate.html', context)
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = EditForm(registered_list=registered_list, available_list=available_list, initial={'days': days})
+
+    domain = get_current_site(request).domain
+    household_link = f"{request.scheme}://{domain}/registration/household/{urlsafe_base64_encode(force_bytes(user.household.pk))}/{user.household.token}/"
+    context = {'form': form, 'watchparty_list': watchparty_list, 'uidb64': uidb64, 'user_token': token, 'household_link': household_link}
+    return render(request, 'registration/user_edit.html', context)
 
 def watchparty_info(request, uidb64, token):
     try:
@@ -404,15 +520,24 @@ def watchparty_info(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         watchparty_list = [] 
     
-    if len(list) > 0:
+    if len(watchparty_list) > 0:
         repr_watchparty = watchparty_list[0]
     
     if len(watchparty_list) == 0 or str(repr_watchparty.token) != str(token):
         return HttpResponse("ERROR 108: Watchparty Info Link ist ungültig.")
-    
-    registrations = Registration.objects.filter()
-    
-    return HttpResponse("Watchparty info view")
+
+    data = {}
+    for watchparty in watchparty_list:
+        registrations = Registration.objects.filter(watchparty=watchparty)
+        if registrations:
+            data[watchparty] = [registration.user for registration in registrations]
+        else: 
+            data[watchparty] = []
+
+    context = {'watchparty_list': watchparty_list, 'data': data}
+    for watchparty in data:
+        print(data[watchparty])
+    return render(request, 'registration/watchparty_info.html', context)
 
 #helper functions
 def max_haushalt_id():
