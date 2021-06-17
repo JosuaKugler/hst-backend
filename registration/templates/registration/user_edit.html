@@ -25,9 +25,12 @@
                 {{ watchparty_list.0.street }}<br> <!-- all watchpartys have the same address-->
                 {{ watchparty_list.0.plz }} {{ watchparty_list.0.city }}
             </p>
+            Der Host dieser Watchparty ist {{ watchparty_list.0.first_name }} {{ watchparty_list.0.last_name }}. 
+            Kontaktiere sie/ihn gerne unter <a href="mailto:{{ watchparty_list.0.email }}">{{ watchparty_list.0.email }}</a>.
+
             Lade über diesen Link weitere Menschen aus deinem Haushalt zur Watchparty ein: <a href="{{ household_link }}">{{ household_link }}</a>.
             <h3>Deine Anmeldungen</h3>
-            <form action="{% url 'user_edit' uidb64 user_token %}" method="post">
+            <form action="{% url 'user_edit' uidb64 user_token %}" method="post" onsubmit="return confirm('Möchtest du deine Anmeldungen wie angegeben ändern?');">
                 {% csrf_token %}
                 {{ form|crispy }}
             <button class="btn btn-primary m-3" type="submit">Änderungen speichern</button> 
