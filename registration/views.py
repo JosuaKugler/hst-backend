@@ -8,8 +8,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.regex_helper import Choice
-import hashlib
-import random
+from geopy import Nominatim
+import secrets
 
 from .models import Household, Watchparty, User, Registration
 from .forms import MainForm, SameHouseholdForm, WatchpartyForm
@@ -82,15 +82,12 @@ def register(request, watchparty_loc_id):
             # then redirect to successful registration page with validation email info
             # process the data in form.cleaned_data as required
             
-            
             #create User:
             address = form.cleaned_data['address']
-            token_base = address + str(random.randint(100000,1000000))
-            token = hashlib.sha256(bytes(token_base, 'utf-8')).hexdigest()
 
             household = Household(
                 address = address,
-                token = token
+                token = secrets.token_urlsafe(16)
             )
             household.save()
 
@@ -103,7 +100,8 @@ def register(request, watchparty_loc_id):
                 wants_rapid_test = False,
                 household = household,
                 is_active = False,
-                creation_date = datetime.today() #returns time
+                creation_date = datetime.today(), #returns time
+                token = secrets.token_urlsafe(16)
             )
             user.save()
 
@@ -217,7 +215,8 @@ def register_with_household_id(request, household_pk_uidb64, token):
                 wants_rapid_test = False,
                 household = household,
                 creation_date = datetime.today(),
-                is_active = False
+                is_active = False,
+                token = secrets.token_urlsafe(16)
             )
             user.save()
 
@@ -264,8 +263,8 @@ def registration_success(request, user_id):
     user = get_object_or_404(User, id = user_id)
     registrations = Registration.objects.filter(user = user)
     watchparty_list = [registration.watchparty for registration in registrations]
-    print(watchparty_list)
-    context = {'watchparty_list': watchparty_list}
+    #print(watchparty_list)
+    context = {'watchparty_list': watchparty_list, 'email': user.email}
     return render(request, 'registration/registration_success.html', context)
 
 def activate(request, uidb64, email_token):
@@ -282,15 +281,20 @@ def activate(request, uidb64, email_token):
         registrations = Registration.objects.filter(user = user)
         watchparty_list = [registration.watchparty for registration in registrations]
         domain = get_current_site(request).domain
+        scheme = request.scheme
 
         household = user.household
         household_pk = urlsafe_base64_encode(force_bytes(household.pk))
         household_token = household.token
 
-        household_link = f"https://{domain}/registration/household/{household_pk}/{household_token}/"
+        user_pk = urlsafe_base64_encode(force_bytes(user.pk))
+        user_token = user.token
 
-        send_confirmation_email(user, watchparty_list, domain, household_link)
-        context = {'watchparty_list': watchparty_list, 'household_link': household_link}
+        household_link = f"{scheme}://{domain}/registration/household/{household_pk}/{household_token}/"
+        edit_link = f"https://{domain}/registration/edit/{user_pk}/{user_token}/"
+
+        send_user_confirmation_email(user, watchparty_list, domain, household_link, edit_link)
+        context = {'watchparty_list': watchparty_list, 'household_link': household_link, 'edit_link': edit_link}
         return render(request, 'registration/activate.html', context)
     else:
         return HttpResponse('Aktivierungslink ungültig!')
@@ -310,6 +314,7 @@ def new_watchparty(request):
             days = [date(year=2021, month=6, day=20 + int(i)) for i in daynumbers]
 
             #create Watchparty:
+            token = secrets.token_urlsafe(16)
             loc_id__max = max_loc_id()
             for day in days:
                 watchparty = Watchparty(
@@ -325,13 +330,15 @@ def new_watchparty(request):
                     last_name = form.cleaned_data['last_name'],
                     is_active = False,
                     is_confirmed = False, 
-                    creation_date = datetime.today()
+                    creation_date = datetime.today(),
+                    token = token,
+                    latitude = form.cleaned_data['latitude'],
+                    longitude = form.cleaned_data['longitude']
                 )
                 watchparty.save()
-
-            
             
             #do email stuff
+
             domain = get_current_site(request).domain
             repr_watchparty = Watchparty.objects.all().filter(loc_id = loc_id__max + 1)[0]
             send_email_validation_email(repr_watchparty, domain, "watchparty_activate")
@@ -359,16 +366,52 @@ def watchparty_activate(request, uidb64, email_token):
 
     if watchparty is not None and account_activation_token.check_token(watchparty, email_token):
         watchparty_list = get_list_or_404(Watchparty, loc_id = watchparty.loc_id)
-        context = {'watchparty_list': watchparty_list}
+        domain = get_current_site(request).domain
+        scheme = request.scheme
+
+        uidb = urlsafe_base64_encode(force_bytes(watchparty.loc_id))
+        token = watchparty.token
+
+        info_link = f"{scheme}://{domain}/info/{uidb}/{token}/"
+
+        context = {'watchparty_list': watchparty_list, "info_link":info_link }
         for watchparty in watchparty_list:
             watchparty.is_active = True
             watchparty.save()
         #send confirmation email 
-        domain = get_current_site(request).domain
-        send_watchparty_confirmation_email(watchparty_list, domain)
+        send_watchparty_confirmation_email(watchparty_list, domain, info_link)
         return render(request, 'registration/watchparty_activate.html', context)
     else:
         return HttpResponse('Aktivierungslink ungültig!')
+
+def user_edit(request, uidb64, token):
+    try:
+        user_pk = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=user_pk)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None 
+    
+    if user is None or str(user.token) != str(token):
+        return HttpResponse("ERROR 107: User Edit Link ist ungültig.")
+    
+    return HttpResponse("User Edit View")
+
+def watchparty_info(request, uidb64, token):
+    try:
+        loc_id = force_text(urlsafe_base64_decode(uidb64))
+        watchparty_list = Watchparty.objects.filter(loc_id=loc_id)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        watchparty_list = [] 
+    
+    if len(list) > 0:
+        repr_watchparty = watchparty_list[0]
+    
+    if len(watchparty_list) == 0 or str(repr_watchparty.token) != str(token):
+        return HttpResponse("ERROR 108: Watchparty Info Link ist ungültig.")
+    
+    registrations = Registration.objects.filter()
+    
+    return HttpResponse("Watchparty info view")
 
 #helper functions
 def max_haushalt_id():
@@ -405,7 +448,7 @@ def send_email_validation_email(obj, domain, type_activate):
         #html_message=htmlmessage, 
         fail_silently=False)
 
-def send_confirmation_email(user, watchparty_list, domain, household_link):
+def send_user_confirmation_email(user, watchparty_list, domain, household_link, edit_link):
     subject = 'Anmeldung Hochschultage Watchparty'
     context = {
         'user': user,
@@ -414,9 +457,10 @@ def send_confirmation_email(user, watchparty_list, domain, household_link):
         #'token': account_activation_token.make_token(user),
         'domain': domain,
         'household_link': household_link,
+        'edit_link': edit_link,
     }
     #htmlmessage = render_to_string('registration/validation_email.html', context)
-    message = render_to_string('registration/confirmation_email_text.html', context)
+    message = render_to_string('registration/user_confirmation_email_text.html', context)
     from_email = 'kontakt@hst-heidelberg.de'
 
     send_mail(subject, 
@@ -427,12 +471,13 @@ def send_confirmation_email(user, watchparty_list, domain, household_link):
         fail_silently=False)
 
 
-def send_watchparty_confirmation_email(watchparty_list, domain):
+def send_watchparty_confirmation_email(watchparty_list, domain, info_link):
     subject = 'Hochschultage Watchparty Erstellen'
     repr_watchparty = watchparty_list[0]
     context = {
         'watchparty_list': watchparty_list,
         'first_name': repr_watchparty.first_name,
+        'info_link': info_link,
         #'uid': urlsafe_base64_encode(force_bytes(repr_watchparty.pk)),
         #'token': account_activation_token.make_token(repr_watchparty), #should also work with watchparty
         'domain': domain

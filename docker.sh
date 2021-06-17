@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "#### docker build ###############################"
-sudo ./docker_build.sh
+./docker_build.sh
 echo "#### docker build ###############################"
-sudo ./docker_run.sh
+./docker_run.sh

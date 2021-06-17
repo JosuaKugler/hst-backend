@@ -20,5 +20,7 @@ urlpatterns = [
     path('watchparty_activate/<uidb64>/<email_token>/',
          views.watchparty_activate, name='watchparty_activate'),
     path('watchparty_registration_success/<int:loc_id>/',
-         views.watchparty_registration_success, name='watchparty_registration_success')
+         views.watchparty_registration_success, name='watchparty_registration_success'),
+    path('edit/<uidb64>/<token>/', views.user_edit, name='user_edit'),
+    path('info/<uidb64>/<token>/', views.watchparty_info, name='watchparty_info')
 ]
