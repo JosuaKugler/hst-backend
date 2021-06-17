@@ -142,6 +142,15 @@ class EditForm(forms.Form):
         for watchparty in self.available_list:
             weekday = week[watchparty.day.weekday()]
             newCHOICES.append((watchparty.day.weekday(), weekday))
+        
+        for watchparty in self.registered_list:
+            weekday = week[watchparty.day.weekday()]
+            element = (watchparty.day.weekday(), weekday)
+            if element not in newCHOICES:
+                newCHOICES.append(element)
+        
+        newCHOICES.sort(key= (lambda tupel : tupel[0]))
+
         super(EditForm, self).__init__(*args, **kwargs)
         self.fields['days'].choices = newCHOICES
 

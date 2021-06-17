@@ -554,7 +554,6 @@ def max_loc_id():
     else:
         return 0
 
-
 def send_email_validation_email(obj, domain, type_activate, scheme):
     subject = 'Bestätige deine Emailadresse'
     context = {
@@ -596,7 +595,6 @@ def send_user_confirmation_email(user, watchparty_list, household_link, edit_lin
         #html_message=htmlmessage, 
         fail_silently=False)
 
-
 def send_watchparty_confirmation_email(watchparty_list, domain, info_link):
     subject = 'Hochschultage Watchparty Erstellen'
     repr_watchparty = watchparty_list[0]
@@ -618,7 +616,6 @@ def send_watchparty_confirmation_email(watchparty_list, domain, info_link):
         [repr_watchparty.email], 
         #html_message=htmlmessage, 
         fail_silently=False)
-
 
 def get_total_people(watchparty):
     registrations = Registration.objects.filter(watchparty=watchparty)
@@ -654,7 +651,6 @@ def get_households(watchparty):
 
     return len(households)
 
-
 def get_free_households(watchparty):
     registrations = Registration.objects.filter(watchparty=watchparty)
     households = []
@@ -682,7 +678,6 @@ def get_free_vaccinated(watchparty):
         cnt += 1
     return watchparty.max_place_num - cnt
 
-
 def get_free_unvaccinated(watchparty, check_households = True):
     if check_households:
         if get_free_households(watchparty) <= 0:
@@ -699,4 +694,3 @@ def get_free_unvaccinated(watchparty, check_households = True):
     unvaccinated_cnt += watchparty.wg_people_num
     free_unvaccinated_cnt = max_people - unvaccinated_cnt
     return min(get_free_vaccinated(watchparty), free_unvaccinated_cnt) #min( people that fit into the wg, people according to covid regulations)
-
