@@ -5,22 +5,22 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Christliche Hochschultage Heidelberg 2021">
-        <meta name="author" content="Josua Kugler, Jonathan Schäfer">
+        <meta name="author" content="Josua Kugler, Jonathan Schäfer, Lucca Kümmerle">
 
         <meta property="og:title" content="Christliche Hochschultage 2021">
         <meta property="og:url" content="https://www.hst-heidelberg.de/index.html">
         <meta property="og:description" content="Die christlichen Hochschultage wollen Menschen herausfordern, sich Gedanken über den Glauben und die eigenen Werte und Einstellungen zu machen. Wir wollen Fragen stellen, Antworten suchen und uns gemeinsam auf die Suche machen. Näher zu dem, was uns ausmacht.">
-        <meta property="og:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_small.jpg">
+        <meta property="og:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_smaller.jpg">
         <meta property="og:type" content="website">
 
         <meta name="twitter:card" content="Christliche Hochschultage">
         <meta name="twitter:title" content="Christliche Hochschultage Heidelberg 2021">
         <meta name="twitter:description" content="Die christlichen Hochschultage wollen Menschen herausfordern, sich Gedanken über den Glauben und die eigenen Werte und Einstellungen zu machen. Wir wollen Fragen stellen, Antworten suchen und uns gemeinsam auf die Suche machen. Näher zu dem, was uns ausmacht.">
-        <meta name="twitter:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_small.jpg">
+        <meta name="twitter:image" content="https://www.hst-heidelberg.de/assets/img/berge_2_smaller.jpg">
 
         <title>Hochschultage Heidelberg 2021</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
         <!-- Font Awesome icons (free version)-->
         <!--<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>-->
         <!-- Google fonts-->
@@ -51,7 +51,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link pt-2 js-scroll-trigger" href="#aktuelles">Aktuelles</a></li>
+                        <li class="nav-item"><a class="nav-link pt-2 js-scroll-trigger" href="#youtube">YouTube</a></li>
                         <li class="nav-item"><a class="nav-link pt-2 js-scroll-trigger" href="#program">Programm</a></li>
                         <li class="nav-item"><a class="nav-link pt-2 js-scroll-trigger" href="#services">Unterstützen</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-primary btn-xl py-2" style="padding-right: 16px; color: black" href="registration/">Watchpartys</a></li>
@@ -79,17 +79,14 @@
                 </div>
             </div>
         </header>
-        <section class="page-section bg-dark" id="aktuelles">
+        <section class="page-section bg-dark" id="youtube">
             <div class="container text-light">
-                <h2>Aktuelles</h2>
-                <!--<ul>
-                    <li>Am Sonntag, den <strong>20.06. um 18:00 Uhr</strong> findet der Mitarbeitergottesdienst in der
-                        <a target="_blank" href="https://www.google.com/maps/place/Ev.+Hosanna+Gemeinde/@49.4084163,8.6813998,18.75z/data=!4m13!1m7!3m6!1s0x4797c12102cc514f:0xa298fb07cd62e50!2sVangerowstra%C3%9Fe+3,+69115+Heidelberg!3b1!8m2!3d49.4086676!4d8.6821964!3m4!1s0x4797c1279a11cabd:0x85089b07c2eb1cab!8m2!3d49.4086265!4d8.6818694">
-                            Lutherkirche</a> statt, bitte vorher <a href="https://lgv-hd.church.tools/publicgroup/101">hier</a> anmelden.</li>
-                </ul>-->
-                Am Sonntag, den <strong>20.06. um 18:00 Uhr</strong> findet der Mitarbeitergottesdienst in der
-                <a target="_blank" href="https://www.google.com/maps/place/Ev.+Hosanna+Gemeinde/@49.4084163,8.6813998,18.75z/data=!4m13!1m7!3m6!1s0x4797c12102cc514f:0xa298fb07cd62e50!2sVangerowstra%C3%9Fe+3,+69115+Heidelberg!3b1!8m2!3d49.4086676!4d8.6821964!3m4!1s0x4797c1279a11cabd:0x85089b07c2eb1cab!8m2!3d49.4086265!4d8.6818694">
-                    Lutherkirche</a> statt, bitte vorher <a href="https://lgv-hd.church.tools/publicgroup/101">hier</a> anmelden.
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/live_stream?channel=UCO8bdqW_l9v8MS26mqAEUgA" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
             </div>
         </section>
         <section class="page-section bg-light" id="program">
@@ -143,7 +140,7 @@
                                             <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/A26KycD_ogY">Livestream</a><br>
                                                 <p class="small">
                                                     Wer ich bin, was mich ausmacht, ob ich genüge...
                                                     diese Fragen beschäftigen den Menschen unabhängig vom Alter, sozialer Schicht, Ethnizität oder Religion.
@@ -194,7 +191,7 @@
                                             <dd >Postkarten auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/CC16JMKyVgE">Livestream</a><br>
                                                 <p class="small">
                                                     Am Dienstag wollen wir uns mit Enttäuschungen und persönlichen Krisen beschäftigen.
                                                     Dabei wollen wir aber auch auf Gott schauen, und erleben, wie er uns im Leid begegnet.
@@ -244,7 +241,7 @@
                                             <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/v8iC10mI_Xk">Livestream</a><br>
                                                 <p class="small">
                                                     Beziehungen gehören zum Menschsein wie die Luft zum Atmen.
                                                     Wie kann der christliche Glaube helfen, diese Beziehungen so zu gestalten,
@@ -294,7 +291,7 @@
                                             <dd >Spiele auf der Neckarwiese, Turniere: Volleyball, Spikeball</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/_SLAYpWxz7s">Livestream</a><br>
                                                 <p class="small">
                                                     Anders als in unseren Träumen lehrt uns die Realität, dass wir als Menschen an Grenzen stoßen.
                                                     Die Realität zeigt uns – unabhängig davon ob wir religiös sind oder nicht –,
@@ -345,7 +342,7 @@
                                             <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/-LCGZcbCoHk">Livestream</a><br>
                                                 <p class="small">
                                                     Das Seltsame am Himmel ist, dass alle ihn anscheinend toll finden, aber keiner irgendwie so recht hin will.
                                                     Das Thema heute: Warum gibt es eine Sehnsucht nach dem Himmel, nach dem Ewigen,
@@ -392,7 +389,7 @@
                                             <dd ><a href="#prayer-breakfast" style="color: white;" data-toggle="modal">Gebetsfrühstück, Neckarwiese</a></dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                Livestream <br>
+                                                <a href="https://youtu.be/KslcsGGdEHA">Livestream</a><br>
                                                 <p class="small">
                                                     Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
                                                     Und mag sie für manche irrelevant und überholt klingen,

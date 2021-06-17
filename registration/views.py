@@ -14,6 +14,8 @@ from .models import Household, Watchparty, User, Registration
 from .forms import EditForm, MainForm, SameHouseholdForm, WatchpartyForm
 from .tokens import account_activation_token
 
+scheme = 'https'
+
 #corona-rules:
 max_people = 10
 max_households = 3
@@ -29,7 +31,7 @@ def index(request):
     for watchparty in W_repr_list:
         plzcity = f"{watchparty.plz} {watchparty.city}"
         domain = get_current_site(request).domain
-        link = f"{ request.scheme }://{domain}/registration/{watchparty.loc_id}/"
+        link = f"{ scheme }://{domain}/registration/{watchparty.loc_id}/"
         popup_str = f"""<strong> {watchparty.plz} {watchparty.city} </strong><br>
             { watchparty.street } <br>
             <br>
@@ -49,7 +51,7 @@ def index(request):
 
     domain = get_current_site(request).domain
 
-    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict, 'domain': domain, 'scheme': request.scheme })
+    return render(request, 'registration/registration_index_map.html', context={'loc_dict': loc_dict, 'domain': domain, 'scheme': scheme })
 
 def register(request, watchparty_loc_id):
     watchparty_list = get_list_or_404(Watchparty, loc_id=watchparty_loc_id) #get all watchpartys with watchparty_id
@@ -132,7 +134,7 @@ def register(request, watchparty_loc_id):
 
             #do email stuff
             domain = get_current_site(request).domain
-            send_email_validation_email(user, domain, "activate", request.scheme)
+            send_email_validation_email(user, domain, "activate", scheme)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -246,7 +248,7 @@ def register_with_household_id(request, household_pk_uidb64, token):
 
             #do email stuff
             domain = get_current_site(request).domain
-            send_email_validation_email(user, domain, "activate", request.scheme)
+            send_email_validation_email(user, domain, "activate", scheme)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -280,7 +282,6 @@ def activate(request, uidb64, email_token):
         registrations = Registration.objects.filter(user = user)
         watchparty_list = [registration.watchparty for registration in registrations]
         domain = get_current_site(request).domain
-        scheme = request.scheme
 
         household = user.household
         household_pk = urlsafe_base64_encode(force_bytes(household.pk))
@@ -304,7 +305,7 @@ def new_watchparty(request):
         form = WatchpartyForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # deal with request.POST data here, see { request.scheme }://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
+            # deal with request.POST data here, see { scheme }://docs.djangoproject.com/en/3.2/intro/tutorial04/ for details
             # then redirect to successful registration page with validation email info
             # process the data in form.cleaned_data as required
             
@@ -341,7 +342,7 @@ def new_watchparty(request):
 
             domain = get_current_site(request).domain
             repr_watchparty = Watchparty.objects.all().filter(loc_id = loc_id__max + 1)[0]
-            send_email_validation_email(repr_watchparty, domain, "watchparty_activate", request.scheme)
+            send_email_validation_email(repr_watchparty, domain, "watchparty_activate", scheme)
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/watchparty_registration_success/' + str(watchparty.loc_id) + '/')
             #return HttpResponse("Watchparty created")
@@ -367,7 +368,6 @@ def watchparty_activate(request, uidb64, email_token):
     if watchparty is not None and account_activation_token.check_token(watchparty, email_token):
         watchparty_list = get_list_or_404(Watchparty, loc_id = watchparty.loc_id)
         domain = get_current_site(request).domain
-        scheme = request.scheme
 
         uidb = urlsafe_base64_encode(force_bytes(watchparty.loc_id))
         token = watchparty.token
@@ -483,7 +483,6 @@ def user_edit(request, uidb64, token):
 
             #do email stuff
             domain = get_current_site(request).domain
-            scheme = request.scheme
 
             household = user.household
             household_pk = urlsafe_base64_encode(force_bytes(household.pk))
@@ -509,7 +508,7 @@ def user_edit(request, uidb64, token):
         form = EditForm(registered_list=registered_list, available_list=available_list, initial={'days': days})
 
     domain = get_current_site(request).domain
-    household_link = f"{request.scheme}://{domain}/registration/household/{urlsafe_base64_encode(force_bytes(user.household.pk))}/{user.household.token}/"
+    household_link = f"{scheme}://{domain}/registration/household/{urlsafe_base64_encode(force_bytes(user.household.pk))}/{user.household.token}/"
     context = {'form': form, 'watchparty_list': watchparty_list, 'uidb64': uidb64, 'user_token': token, 'household_link': household_link}
     return render(request, 'registration/user_edit.html', context)
 

@@ -3,7 +3,6 @@
 {% block title %}Erstellen erfolgreich{% endblock %}
 
 {% block body %}
-<body class="bg-dark p-3">
     <div class="container bg-light p-3">
         {% if watchparty_list %}
             {% if watchparty_list|length > 1 %}
@@ -22,5 +21,4 @@
             <p>Fehler: Keine Watchparty erstellt.</p>
         {% endif %}
     </div>
-</body>
 {% endblock %}
