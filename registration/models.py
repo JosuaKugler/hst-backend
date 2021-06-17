@@ -18,7 +18,7 @@ class User(models.Model):
     household = models.ForeignKey(Household, on_delete=models.CASCADE)
     is_active = models.BooleanField()
     creation_date = models.DateTimeField()
-    token = models.CharField(max_length=200)
+    token = models.CharField(max_length=200, default="default_token_please_change")
 
 
 class Watchparty(models.Model):
@@ -39,10 +39,10 @@ class Watchparty(models.Model):
     is_active = models.BooleanField()
     is_confirmed = models.BooleanField()
     creation_date = models.DateTimeField()
-    token = models.CharField(max_length=200)
-    rapid_test = models.CharField(max_length=200)
-    latitude = models.CharField(max_length=200)
-    longitude = models.CharField(max_length=200)
+    token = models.CharField(max_length=200, default="default_token_please_change")
+    rapid_test = models.CharField(max_length=200, default=False)
+    latitude = models.CharField(max_length=200, default="0.0")
+    longitude = models.CharField(max_length=200, default="0.0")
 
 
 class Registration(models.Model):

@@ -19,17 +19,17 @@ COPY . /app
 RUN mkdir database-vol
 RUN rm -rf collect_static
 RUN python3 manage.py collectstatic
-#RUN python3 manage.py makemigrations
-#RUN python3 manage.py migrate --noinput
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate --noinput
 
 #create admin
-#ARG DJANGO_SUPERUSER_USERNAME=admin
-#ARG DJANGO_SUPERUSER_EMAIL=admin@my.company
-#ARG DJANGO_SUPERUSER_PASSWORD=mypass
+ARG DJANGO_SUPERUSER_USERNAME=admin
+ARG DJANGO_SUPERUSER_EMAIL=admin@my.company
+ARG DJANGO_SUPERUSER_PASSWORD=mypass
 
-#RUN python3 manage.py createsuperuser --noinput
-#RUN python3 manage.py makemigrations
-#RUN python3 manage.py migrate --noinput
+RUN python3 manage.py createsuperuser --noinput
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate --noinput
 
 #set timezone
 ENV TZ=Europe/Berlin
