@@ -333,7 +333,8 @@ def new_watchparty(request):
                     creation_date = datetime.today(),
                     token = token,
                     latitude = form.cleaned_data['latitude'],
-                    longitude = form.cleaned_data['longitude']
+                    longitude = form.cleaned_data['longitude'],
+                    rapid_test = form.cleaned_data['rapid_test']
                 )
                 watchparty.save()
             
