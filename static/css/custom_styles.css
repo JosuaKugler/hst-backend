@@ -24,6 +24,31 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
+
+.easy-button-container {
+    background: #FFCF48;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+.easy-button-button {
+    background-color: #FFCF48;
+    font-size: 2rem;
+    margin-top: -.1rem;
+    margin-bottom: .1rem;
+    margin-right: .1rem;
+}
+
+.leaflet-bar button {
+    background-color: #FFCF48;
+}
+
+.leaflet-bar button:hover {
+    background-color: #FFCF48;
+}
+
+
 @media (min-width: 800px) {
     .leaflet-popup-content {
         width:250px;
@@ -107,7 +132,7 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
     }
     .days-navbar-container {
         z-index: 1030;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, .3) 70%, rgba(0, 0, 0, 0));
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 45%, rgba(255, 255, 255, .3) 55%, rgba(0, 0, 0, 0));
     }
 }
 
