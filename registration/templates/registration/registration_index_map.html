@@ -109,27 +109,19 @@
             }
         ).addTo(map)
 
-        async function add_markers() {
-            for (key in data) {
-                value = data[key];
-                await $.get(
-                    location.protocol + '//nominatim.openstreetmap.org/search?format=json&q=' + value.plzcity + ", " + value.street,
-                    function (loc_data) {
-                        console.log(loc_data);
-                        lon = loc_data[0].lon;
-                        lat = loc_data[0].lat;
-                        //var popupStr = '<strong>' + value.plzcity + '</strong><br>' + value.street + '<br><br>' + '<a href="' + value.link + '">Anmeldung</a>'
-                        var popup_str = value.popup_str
-                        if (value.color == 'green') idict = { icon: greenIcon }
-                        if (value.color == 'yellow') idict = { icon: yellowIcon }
-                        if (value.color == 'red') idict = { icon: redIcon }
+        for (key in data) {
+            value = data[key];
+            var popup_str = value.popup_str
+            if (value.color == 'green') idict = { icon: greenIcon }
+            if (value.color == 'yellow') idict = { icon: yellowIcon }
+            if (value.color == 'red') idict = { icon: redIcon }
 
-                        L.marker([lat, lon], idict).addTo(map).bindPopup(popup_str, {maxWidth: "auto"});
-                    }
-                );
-            }
+            lat = value.latitude
+            lon = value.longitude
+
+            L.marker([lat, lon], idict).addTo(map).bindPopup(popup_str, {maxWidth: "auto"});
         }
-        add_markers()
+
         var legend = L.control({ position: "bottomleft" });
 
         legend.onAdd = function (map) {
@@ -138,9 +130,6 @@
             div.innerHTML += '<i class="rounded" style="background: #5cb85c"></i><span>Freie Plätze für alle</span><br>';
             div.innerHTML += '<i class="rounded" style="background: #ffcf48"></i><span>Freie Plätze nur für Geimpfte</span><br>';
             div.innerHTML += '<i class="rounded" style="background: #d9534f"></i><span>Aktuell keine freien Plätze</span><br>';
-
-
-
             return div;
         };
 

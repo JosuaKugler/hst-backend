@@ -16,11 +16,11 @@ class MainForm(forms.Form):
             'Freitag',
             'Samstag',
             'Sonntag']
-        for i, watchparty in enumerate(self.watchparty_list):
+        for watchparty in self.watchparty_list:
             weekday = week[watchparty.day.weekday()]
             if watchparty in self.only_vaccinated_list:
                 weekday = str(weekday) + " (nur für Geimpfte!)"
-            newCHOICES.append((i, weekday))
+            newCHOICES.append((watchparty.day.weekday(), weekday))
         super(MainForm, self).__init__(*args, **kwargs)
         self.fields['days'].choices = newCHOICES
     
@@ -38,7 +38,6 @@ class MainForm(forms.Form):
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
 
-
 class SameHouseholdForm(forms.Form):
     # pass attrs to add classes or styling to the fields
     def __init__(self, *args, **kwargs):
@@ -54,11 +53,11 @@ class SameHouseholdForm(forms.Form):
             'Freitag',
             'Samstag',
             'Sonntag']
-        for i, watchparty in enumerate(self.watchparty_list):
+        for watchparty in self.watchparty_list:
             weekday = week[watchparty.day.weekday()]
             if watchparty in self.only_vaccinated_list:
                 weekday = str(weekday) + " (nur für Geimpfte!)"
-            newCHOICES.append((i, weekday))
+            newCHOICES.append((watchparty.day.weekday(), weekday))
         super(SameHouseholdForm, self).__init__(*args, **kwargs)
         self.fields['days'].choices = newCHOICES
 
@@ -115,7 +114,7 @@ class WatchpartyForm(forms.Form):
         geolocator = Nominatim(user_agent="hst")
         location = geolocator.geocode(street + " " + plz + " " + city)
         if not location:
-            msg = "Adresse konnte nicht gefunden werden. Sollte die Adresse korrekt sein, schreib uns gern eine Mail an <a href = 'mailto:kontakt@hst-heidelberg.de'>kontakt@hst-heidelberg.de</a>."
+            msg = "Adresse konnte nicht gefunden werden. Sollte die Adresse korrekt sein, schreib uns gern eine Mail an kontakt@hst-heidelberg.de."
             self.add_error('plz', msg)
             self.add_error('city', msg)
             self.add_error('street', msg)
@@ -124,3 +123,34 @@ class WatchpartyForm(forms.Form):
             self.cleaned_data['latitude'] = str(location.latitude)
 
         return self.cleaned_data
+
+class EditForm(forms.Form):
+    # pass attrs to add classes or styling to the fields
+    def __init__(self, *args, **kwargs):
+        # get watchparty_list in order to display selectable watchparty days
+        self.registered_list = kwargs.pop('registered_list')
+        self.available_list = kwargs.pop('available_list')
+        newCHOICES = []
+        week = [
+            'Montag',
+            'Dienstag',
+            'Mittwoch',
+            'Donnerstag',
+            'Freitag',
+            'Samstag',
+            'Sonntag']
+        for watchparty in self.available_list:
+            weekday = week[watchparty.day.weekday()]
+            newCHOICES.append((watchparty.day.weekday(), weekday))
+        super(EditForm, self).__init__(*args, **kwargs)
+        self.fields['days'].choices = newCHOICES
+
+    def get_initial_for_field(self, field: forms.MultipleChoiceField, field_name: str):
+        #override
+        initial = super().get_initial_for_field(field, field_name)
+        print(initial)
+        return initial
+    
+    CHOICES = [('1', 'Didnt work')]
+    days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                     choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?", required=False)

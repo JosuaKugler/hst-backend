@@ -1,5 +1,6 @@
 {% autoescape off %}
 Hi {{ user.first_name }},
+{% if watchparty_list|length > 0 %}
 {% if watchparty_list|length > 1 %}
 Du hast dich erfolgreich für folgende Watchpartys angemeldet:
 {% else %}
@@ -9,11 +10,13 @@ Du hast dich erfolgreich für folgende Watchparty angemeldet:
     - {{ watchparty.street }}, {{ watchparty.plz }} {{ watchparty.city }} am {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.
 {% endfor %}
 Der Gastgeber dieser Watchparty-Location ist {{ watchparty_list.0.first_name }} {{ watchparty_list.0.last_name }}.
-Bei Fragen schreib ihm gerne an {{ watchparty_list.0.email }}.
+Bei Fragen schreib ihm/ihr gerne an {{ watchparty_list.0.email }}.
 
 Melde weitere Personen aus deinem Haushalt bitte über folgenden Link an: {{ household_link }}.
 Unter folgendem Link kannst du deine Anmeldung einsehen, bearbeiten oder dich abmelden: {{ edit_link }}.
-
+{% else %}
+Du hast dich erfolgreich abgemeldet.
+{% endif %}
 Wenn du noch weitere Fragen hast, schreib uns gerne eine Mail an kontakt@hst-heidelberg.de.
 Viele Grüße,
 Dein HST Orga Team

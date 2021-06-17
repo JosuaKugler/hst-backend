@@ -30,9 +30,10 @@
                     {{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}.</li>
             {% endfor %}
             </ul>
-            Der Gastgeber dieser Watchparty-Location ist {{ watchparty_list.0.first_name }} {{ watchparty_list.0.last_name }}.
-        Bei Fragen schreib ihm gerne an {{ watchparty_list.0.email }}.
-        Melde weitere Personen aus deinem Haushalt bitte über folgenden Link an: {{ household_link }}.
+            Der Host dieser Watchparty-Location ist {{ watchparty_list.0.first_name }} {{ watchparty_list.0.last_name }}.
+            Bei Fragen schreib ihm/ihr gerne an <a href='mailto:{{ watchparty_list.0.email }}'>{{ watchparty_list.0.email }}</a>.<br>
+            Melde weitere Personen aus deinem Haushalt bitte über folgenden Link an: <a href='{{ household_link }}'>{{ household_link }}</a>.<br>
+            Unter folgendem Link kannst du deine Anmeldung einsehen, bearbeiten oder dich abmelden: <a href='{{ edit_link }}'>{{ edit_link }}</a>.
         {% else %}
             <p>Keine Registration erfolgt.</p>
         {% endif %}
