@@ -25,5 +25,3 @@
 **/values.dev.yaml
 README.md
 database-vol
-registration/migrations/*.py
-!registration/migrations/__init__.py
