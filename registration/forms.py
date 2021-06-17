@@ -24,33 +24,6 @@ class MainForm(forms.Form):
         super(MainForm, self).__init__(*args, **kwargs)
         self.fields['days'].choices = newCHOICES
     
-    def clean(self):
-        super().clean()
-
-        if self.cleaned_data['max_place_num'] <= 0:
-            self.add_error('max_place_num', 'Bitte gib eine positive Anzahl an Personen an.')
-        
-        if self.cleaned_data['wg_people_num'] <= 0:
-            self.add_error('wg_people_num', 'Bitte gib eine positive Anzahl an Personen an.')
-        
-        plz = self.cleaned_data['plz']
-        city = self.cleaned_data['city']
-        street = self.cleaned_data['street']
-
-        geolocator = Nominatim(user_agent="hst")
-        location = geolocator.geocode(street + " " + plz + " " + city)
-        if not location:
-            msg = "Adresse konnte nicht gefunden werden. Sollte die Adresse korrekt sein, schreib uns gern eine Mail an <a href = 'mailto:kontakt@hst-heidelberg.de'>kontakt@hst-heidelberg.de</a>."
-            self.add_error('plz', msg)
-            self.add_error('city', msg)
-            self.add_error('street', msg)
-        else:
-            self.cleaned_data['longitude'] = str(location.longitude)
-            self.cleaned_data['latitude'] = str(location.latitude)
-
-        return self.cleaned_data
-
-
     CHOICES = [('1', 'Didnt work')]
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
@@ -124,3 +97,29 @@ class WatchpartyForm(forms.Form):
     wg_people_num = forms.IntegerField(label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du die Watchparty anbieten?")
+
+    def clean(self):
+        super().clean()
+
+        if self.cleaned_data['max_place_num'] <= 0:
+            self.add_error('max_place_num', 'Bitte gib eine positive Anzahl an Personen an.')
+        
+        if self.cleaned_data['wg_people_num'] <= 0:
+            self.add_error('wg_people_num', 'Bitte gib eine positive Anzahl an Personen an.')
+        
+        plz = self.cleaned_data['plz']
+        city = self.cleaned_data['city']
+        street = self.cleaned_data['street']
+
+        geolocator = Nominatim(user_agent="hst")
+        location = geolocator.geocode(street + " " + plz + " " + city)
+        if not location:
+            msg = "Adresse konnte nicht gefunden werden. Sollte die Adresse korrekt sein, schreib uns gern eine Mail an <a href = 'mailto:kontakt@hst-heidelberg.de'>kontakt@hst-heidelberg.de</a>."
+            self.add_error('plz', msg)
+            self.add_error('city', msg)
+            self.add_error('street', msg)
+        else:
+            self.cleaned_data['longitude'] = str(location.longitude)
+            self.cleaned_data['latitude'] = str(location.latitude)
+
+        return self.cleaned_data
