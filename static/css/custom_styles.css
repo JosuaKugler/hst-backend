@@ -138,9 +138,11 @@ mobile devices with less than 282 pixel screenwidth have to scroll :(
 
 @media (max-width: 767px) {
     .days-navbar {
-        padding-left: 5px;
+        padding: 5px;
         background-color: white;
         overflow-x: auto;
+        justify-content: center;
+        display: flex;
     }
     .days-navbar-container {
         padding: 0 15px 0 15px;
