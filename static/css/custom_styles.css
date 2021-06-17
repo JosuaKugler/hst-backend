@@ -1,3 +1,7 @@
+.asteriskField {
+    display: none;
+}
+
 .legend {
     padding: 6px 8px;
     opacity: .85;
