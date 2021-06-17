@@ -23,5 +23,7 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+registration/migrations/*
+!registration/migrations/__init__.py
 README.md
 database-vol
