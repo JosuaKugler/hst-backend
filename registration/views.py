@@ -132,7 +132,7 @@ def register(request, watchparty_loc_id):
 
             #do email stuff
             domain = get_current_site(request).domain
-            send_email_validation_email(user, domain, "activate")
+            send_email_validation_email(user, domain, "activate", request.scheme)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -247,7 +247,7 @@ def register_with_household_id(request, household_pk_uidb64, token):
 
             #do email stuff
             domain = get_current_site(request).domain
-            send_email_validation_email(user, domain, "activate")
+            send_email_validation_email(user, domain, "activate", request.scheme)
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
@@ -341,7 +341,7 @@ def new_watchparty(request):
 
             domain = get_current_site(request).domain
             repr_watchparty = Watchparty.objects.all().filter(loc_id = loc_id__max + 1)[0]
-            send_email_validation_email(repr_watchparty, domain, "watchparty_activate")
+            send_email_validation_email(repr_watchparty, domain, "watchparty_activate", request.scheme)
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/watchparty_registration_success/' + str(watchparty.loc_id) + '/')
             #return HttpResponse("Watchparty created")
@@ -429,13 +429,14 @@ def max_loc_id():
         return 0
 
 
-def send_email_validation_email(obj, domain, type_activate):
+def send_email_validation_email(obj, domain, type_activate, scheme):
     subject = 'Bestätige deine Emailadresse'
     context = {
         'first_name': obj.first_name,
         'uid': urlsafe_base64_encode(force_bytes(obj.pk)),
         'token': account_activation_token.make_token(obj),
         'domain': domain,
+        'scheme': scheme,
         'type_activate': type_activate
     }
     message = render_to_string('registration/email_validation_email_text.html', context)
