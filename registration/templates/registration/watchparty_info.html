@@ -16,6 +16,18 @@
         <link href="{% static 'css/custom_styles.css' %}" rel="stylesheet">
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+        <style>
+            @media (max-width: 500px) {
+                .our-large-table {
+                    display: none;
+                }
+            }
+            @media (min-width: 501px) {
+                .our-small-table {
+                    display: none;
+                }
+            }
+        </style>
     </head>
     <body class="bg-dark p-3">
         <div class="container bg-light p-3">
@@ -32,13 +44,23 @@
                 {% for watchparty, users in data.items %}
                     <div>
                         <h4>{{ watchparty.day.day }}.{{ watchparty.day.month}}.{{ watchparty.day.year }}</h4>
-                        <table class="table table-responsive">
+                        <table class="table table-responsive our-large-table">
                             <tr><th>Name</th><th>Email</th><th>Email bestätigt</th></tr>
                             <!-- for user in data[watchparty] -->
                             {% for user in users %}
                                 <tr>
                                     <td>{{ user.first_name }} {{ user.last_name }}</td>
                                     <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                                    <td>{% if  user.is_active %} Ja {% else %} Nein {% endif %} </td>
+                                </tr>    
+                            {% endfor %}
+                        </table>
+                        <table class="table table-responsive our-small-table">
+                            <tr><th>Name</th><th>Email bestätigt</th></tr>
+                            <!-- for user in data[watchparty] -->
+                            {% for user in users %}
+                                <tr>
+                                    <td><a href="mailto:{{ user.email }}">{{ user.first_name }} {{ user.last_name }}</a></td>
                                     <td>{% if  user.is_active %} Ja {% else %} Nein {% endif %} </td>
                                 </tr>    
                             {% endfor %}
