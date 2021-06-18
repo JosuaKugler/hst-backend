@@ -25,29 +25,37 @@ def index(request):
     W = Watchparty.objects.all().filter(is_active = True).filter(is_confirmed = True)
     loc_ids = list(set([x.loc_id for x in list(W)])) # get all unique location ids
     
-    W_repr_list = [W.filter(loc_id = loc_id)[0] for loc_id in loc_ids] #Repräsentatensystem für Watchpartys/(gleiche location)
+    loc_id_watchpartys = {}
+    for loc_id in loc_ids:
+        loc_id_watchpartys[loc_id] = W.filter(loc_id = loc_id)
 
     loc_dict = {}
-    for watchparty in W_repr_list:
-        plzcity = f"{watchparty.plz} {watchparty.city}"
+    for loc_id, watchpartys in loc_id_watchpartys.items():
+        free_households = 0; free_vaccinated = 0; free_unvaccinated = 0
+
+        for watchparty in watchpartys:
+            free_households = max(get_free_households(watchparty), free_households)
+            free_vaccinated = max(get_free_vaccinated(watchparty), free_vaccinated)
+            free_unvaccinated = max(get_free_unvaccinated(watchparty), free_unvaccinated)
+
         domain = get_current_site(request).domain
         link = f"{ scheme }://{domain}/registration/{watchparty.loc_id}/"
         popup_str = f"""<strong> {watchparty.plz} {watchparty.city} </strong><br>
             { watchparty.street } <br>
             <br>
-            freie Haushalte: { get_free_households(watchparty) }<br>
-            freie Plätze: { get_free_vaccinated(watchparty) } (davon bis zu { get_free_unvaccinated(watchparty) } verfügbar für nicht Geimpfte)
+            freie Haushalte: { free_households }<br>
+            freie Plätze: { free_vaccinated } (davon bis zu { free_unvaccinated } verfügbar für nicht Geimpfte)
             """
-        if (get_free_vaccinated(watchparty)) > 0:
+        if (free_vaccinated) > 0:
             popup_str += f"<br><a href=' { link } '>Anmeldung</a>"
 
-        if get_free_unvaccinated(watchparty) > 0:
+        if free_unvaccinated > 0:
             color = "green"
-        elif get_free_vaccinated(watchparty) > 0:
+        elif free_vaccinated > 0:
             color = "yellow"
         else:
             color = "red"
-        loc_dict[watchparty.loc_id] = {"link": link, "popup_str": popup_str, "color": color, "latitude": watchparty.latitude, "longitude": watchparty.longitude}
+        loc_dict[loc_id] = {"link": link, "popup_str": popup_str, "color": color, "latitude": watchparty.latitude, "longitude": watchparty.longitude}
 
     domain = get_current_site(request).domain
 
