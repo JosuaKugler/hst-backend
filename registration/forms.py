@@ -27,7 +27,7 @@ class MainForm(forms.Form):
     CHOICES = [('1', 'Didnt work')]
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
-    email = forms.EmailField(label="E-Mail-Adresse")
+    email = forms.EmailField(label="E-Mail-Adresse", max_length=200)
     address = forms.CharField(label="Adresse", max_length=200)
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
@@ -65,7 +65,7 @@ class SameHouseholdForm(forms.Form):
     CHOICES = [('1', 'FATAL ERROR')]
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
-    email = forms.EmailField(label="E-Mail-Adresse")
+    email = forms.EmailField(label="E-Mail-Adresse", max_length=200)
     #address = forms.CharField(label="Adresse", max_length=200)
     is_vaccinated = forms.BooleanField(
         label="Geimpft oder Genesen?", required=False)
@@ -76,7 +76,6 @@ class SameHouseholdForm(forms.Form):
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
     data_consent = forms.BooleanField(label="Ich habe die Datenschutzerklärung gelesen und stimme auf dieser Grundlage der Verarbeitung meiner Daten zu. Name und Email-Adresse werden an den Host der Watchparty weitergegeben.")
-    
 
 class WatchpartyForm(forms.Form):
     CHOICES = [
@@ -89,15 +88,15 @@ class WatchpartyForm(forms.Form):
     ]
     first_name = forms.CharField(label="Vorname", max_length=200)
     last_name = forms.CharField(label="Nachname", max_length=200)
-    email = forms.EmailField(label="E-Mail-Adresse", help_text="Vorname, Nachname und Email werden an die Teilnehmer der Watchparty weitergegeben.")
+    email = forms.EmailField(label="E-Mail-Adresse", max_length=200, help_text="Vorname, Nachname und Email werden an die Teilnehmer der Watchparty weitergegeben.")
     
     plz = forms.CharField(max_length=5, label="Postleitzahl")
     city = forms.CharField(max_length=200, label="Stadt")
     street = forms.CharField(max_length=200, label="Straße, Hausnummer")
     # maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
     rapid_test = forms.BooleanField(label="Ich möchte meinen Gästen Selbsttests anbieten (werden von den Hochschultagen gestellt).", required=False)
-    max_place_num = forms.IntegerField(label="Wie viele Menschen möchtest du höchstens einladen?")
-    wg_people_num = forms.IntegerField(label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
+    max_place_num = forms.IntegerField(min_value="1", max_value="1000000", label="Wie viele Menschen möchtest du höchstens einladen?")
+    wg_people_num = forms.IntegerField(min_value="1", max_value="1000000", label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du die Watchparty anbieten?")
     

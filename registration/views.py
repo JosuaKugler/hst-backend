@@ -23,7 +23,7 @@ max_households = 3
 # Create your views here.
 def index(request):
     W = Watchparty.objects.all().filter(is_active = True).filter(is_confirmed = True)
-    loc_ids = list(set([x.loc_id for x in list(W)])) # get all unique location ids
+    loc_ids = set([x.loc_id for x in list(W)]) # get all unique location ids
     
     loc_id_watchpartys = {}
     for loc_id in loc_ids:
@@ -97,7 +97,6 @@ def register(request, watchparty_loc_id):
                 address = address,
                 token = secrets.token_urlsafe(16)
             )
-            household.save()
 
             user = User(
                 first_name = form.cleaned_data['first_name'],
@@ -111,7 +110,7 @@ def register(request, watchparty_loc_id):
                 creation_date = datetime.today(), #returns time
                 token = secrets.token_urlsafe(16)
             )
-            user.save()
+
 
             # get all watchpartys the user registered for
             days = form.cleaned_data['days']
@@ -122,7 +121,7 @@ def register(request, watchparty_loc_id):
             for watchparty in watchparty_list:
                 print(watchparty.day.weekday())
                 if str(watchparty.day.weekday()) in days:
-                    if not user.is_vaccinated: #if user isn't vaccinated, a selected watchparty musn't be only_vaccinated
+                    if not user.is_vaccinated: #if user isn't vaccinated, a selected watchparty mustn't be only_vaccinated
                         if not (watchparty in only_vaccinated_list):
                             selected_watchpartys.append(watchparty)
                     else:
@@ -130,6 +129,10 @@ def register(request, watchparty_loc_id):
             
             if not selected_watchpartys:
                 return HttpResponse("Diese Watchparty ist nur für Geimpfte/Genesene noch verfügbar")
+
+            # now it should be safe to alter the DB
+            household.save()
+            user.save()
 
             #create registration objects
             for watchparty in selected_watchpartys:
@@ -146,7 +149,7 @@ def register(request, watchparty_loc_id):
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
-
+        # else path should fall through
     # if a GET (or any other method) we'll create a blank form
     else:
         form = MainForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
@@ -228,7 +231,6 @@ def register_with_household_id(request, household_pk_uidb64, token):
                 is_active = False,
                 token = secrets.token_urlsafe(16)
             )
-            user.save()
 
             # get all watchpartys the user registered for
             days = form.cleaned_data['days']
@@ -244,6 +246,9 @@ def register_with_household_id(request, household_pk_uidb64, token):
 
             if not selected_watchpartys:
                 return HttpResponse("ERROR 106: Diese Watchparty ist nur für Geimpfte/Genesene noch verfügbar")
+            
+            # now it should be save to alter the DB
+            user.save()
 
             #create registration objects
             for watchparty in selected_watchpartys:
@@ -260,7 +265,7 @@ def register_with_household_id(request, household_pk_uidb64, token):
 
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/registration_success/' + str(user.id) + '/')
-
+        # else path should fall through
     # if a GET (or any other method) we'll create a blank form
     else:
         form = SameHouseholdForm(watchparty_list=watchparty_list, only_vaccinated_list=only_vaccinated_list)
@@ -354,6 +359,7 @@ def new_watchparty(request):
             # redirect to a new URL:
             return HttpResponseRedirect('/registration/watchparty_registration_success/' + str(watchparty.loc_id) + '/')
             #return HttpResponse("Watchparty created")
+        # else path should fall through
     # if a GET (or any other method) we'll create a blank form
     else:
         form = WatchpartyForm()
@@ -484,7 +490,10 @@ def user_edit(request, uidb64, token):
 
 
             if len(Registration.objects.filter(user = user)) == 0:
-                User.objects.filter(pk=user.pk).delete()
+                household = user.household
+                User.objects.get(pk=user.pk).delete()
+                if len(list(User.objects.filter(household=household))) == 0:
+                    Household.objects.get(pk=household.pk).delete()
                 return HttpResponse("Du hast dich von allen Terminen dieser Watchparty abgemeldet.")
 
                
@@ -510,7 +519,7 @@ def user_edit(request, uidb64, token):
             send_user_confirmation_email(user, selected_watchpartys, household_link, edit_link)
             context = {'watchparty_list': selected_watchpartys, 'household_link': household_link, 'edit_link': edit_link}
             return render(request, 'registration/activate.html', context)
-
+        # else path should fall through
     # if a GET (or any other method) we'll create a blank form
     else:
         form = EditForm(registered_list=registered_list, available_list=available_list, initial={'days': days})
