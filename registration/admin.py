@@ -80,12 +80,13 @@ class RegistrationAdmin(admin.ModelAdmin):
 
 class HouseholdAdmin(admin.ModelAdmin):
     fields = [
-        'token',
-        'address'
+        'address',
+        'token'
     ]
-    list_display = ('token', 'address')
-    list_filter = ['token', 'address']
+    list_display = ('address', 'token')
+    list_filter = ['address']
     search_fields = ['token', 'address']
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Watchparty, WatchpartyAdmin)
