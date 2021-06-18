@@ -84,7 +84,6 @@ class HouseholdAdmin(admin.ModelAdmin):
         'token'
     ]
     list_display = ('address', 'token')
-    list_filter = ['address']
     search_fields = ['token', 'address']
 
 
