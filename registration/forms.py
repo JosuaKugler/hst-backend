@@ -37,6 +37,7 @@ class MainForm(forms.Form):
     #    )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
+    data_consent = forms.BooleanField(label="Ich habe die Datenschutzerklärung gelesen und stimme auf dieser Grundlage der Verarbeitung meiner Daten zu.  Name und Email-Adresse werden an den Host der Watchparty weitergegeben.")
 
 class SameHouseholdForm(forms.Form):
     # pass attrs to add classes or styling to the fields
@@ -74,6 +75,8 @@ class SameHouseholdForm(forms.Form):
     #    )
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du teilnehmen?")
+    data_consent = forms.BooleanField(label="Ich habe die Datenschutzerklärung gelesen und stimme auf dieser Grundlage der Verarbeitung meiner Daten zu. Name und Email-Adresse werden an den Host der Watchparty weitergegeben.")
+    
 
 class WatchpartyForm(forms.Form):
     CHOICES = [
@@ -97,6 +100,8 @@ class WatchpartyForm(forms.Form):
     wg_people_num = forms.IntegerField(label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du die Watchparty anbieten?")
+    
+    data_consent = forms.BooleanField(label="Ich habe die Datenschutzerklärung gelesen und stimme auf dieser Grundlage der Verarbeitung meiner Daten zu. Insbesondere wird meine Adresse auf der Karte angezeigt sowie mein Name und meine Emailadresse an die Teilnehmer der Watchparty weitergegeben.")
 
     def clean(self):
         super().clean()

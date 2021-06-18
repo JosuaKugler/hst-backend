@@ -32,6 +32,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static "css/styles.css" %}" rel="stylesheet">
         <link href="{% static "css/custom_styles.css" %}" rel="stylesheet">
+        <link href="{% static "css/cookielaw.css" %}" rel="stylesheet">
         <meta name="google-site-verification" content="u78jB1CQw0nbO84n8SiSZQDAo6D8Pitm8ZOTBbmj54c">
         <style>
             body {
@@ -82,7 +83,7 @@
         <section class="page-section bg-dark" id="youtube">
             <div class="container text-light">
                 <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/live_stream?channel=UCO8bdqW_l9v8MS26mqAEUgA" title="YouTube video player"
+                    <iframe id="yt-embed" src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCO8bdqW_l9v8MS26mqAEUgA" title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
@@ -464,6 +465,7 @@
                 </div>
             </div>
         </div>
+        <!--Mihamm Kim Rauchholz-->
         <section class="page-section bg-dark text-white p-0">
             <div class="container">
                 <div class="row">
@@ -485,7 +487,7 @@
                 </div>
             </div>
         </section>
-        <!-- Services-->
+        <!--Unterstützen-->
         <section class="page-section text-dark" id="services">
             <div class="container">
                 <hr class="divider my-2">
@@ -557,8 +559,7 @@
                     Lutherkirche</a> statt, bitte vorher <a href="https://lgv-hd.church.tools/publicgroup/101">hier</a> anmelden.
             </div>
         </section>
-
-        <!-- Footer-->
+        <!--Footer-->
         <footer class="bg-dark py-5">
             <div class="container">
                     <div class="row">
@@ -602,6 +603,26 @@
                 </div>
             </div>
         </footer>
+        <!--Cookies-->
+        <div id="CookielawBanner">
+            <div class="mx-3">
+                <div class="row">
+                    <div class="col-10 my-2">
+                        Durch das Einbinden des YouTube-Videos werden YouTube-Advertisement und YouTube-Tracking Cookies gesetzt. 
+                    </div>
+                    <div class="col-2" style="justify-content: right; display: flex;">
+                        <button class="btn btn-primary" onclick="cookie_consent()">Akzeptieren</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            function cookie_consent() {
+                document.getElementById("CookielawBanner").style.display = "none";
+                document.getElementById("yt-embed").src = "https://www.youtube.com/embed/live_stream?channel=UCO8bdqW_l9v8MS26mqAEUgA"
+            }
+        </script>
         <!-- Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
         <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -617,7 +638,6 @@
         <!-- Core theme JS-->
         <script src="{% static "js/scripts.js" %}"></script>
         <!-- map JS -->
-
     <script>
         days = ['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag', 'samstag'];
         //window.onload = function() {console.log("hi"); document.getElementById('programCarousel').addEventListener("slide", function () {console.log("slide event");});}

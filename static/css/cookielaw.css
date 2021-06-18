@@ -1,0 +1,18 @@
+#CookielawBanner {
+    background: #fff;
+    padding: 15px 0;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+}
+
+#CookielawBanner #CookielawCross {
+    background: url('../cookielaw/img/close.png') no-repeat 0 0;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+}
