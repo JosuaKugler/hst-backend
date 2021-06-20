@@ -121,18 +121,6 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
-        L.easyButton(
-            {
-                position: 'topright',
-                leafletClasses: true,
-                states: [{
-                    onClick: (control) => window.open("{{ scheme }}://{{ domain }}/registration/new_watchparty/", "_self"),
-                    icon: 'fa-plus',
-                    title: 'Erstelle eine neue Watchparty'
-                }]
-            }
-        )//.addTo(map)
-
         for (key in data) {
             value = data[key];
             var popup_str = value.popup_str
