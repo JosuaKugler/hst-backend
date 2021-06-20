@@ -96,7 +96,7 @@ class WatchpartyForm(forms.Form):
     # maximale Anzahl an Personen, die in die WG passen (inklusive Veranstalter-WG)
     rapid_test = forms.BooleanField(label="Ich möchte meinen Gästen Selbsttests anbieten (werden von den Hochschultagen gestellt).", required=False)
     max_place_num = forms.IntegerField(min_value="1", max_value="1000000", label="Wie viele Menschen möchtest du höchstens einladen?")
-    wg_people_num = forms.IntegerField(min_value="1", max_value="1000000", label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können")
+    wg_people_num = forms.IntegerField(min_value="1", max_value="1000000", label="Wie viele Menschen, die weder genesen noch geimpft sind, wohnen in deiner WG? (Wir brauchen die Info, um bei der Platzvergabe die Zahl an Haushalten/Personen korrekt berücksichtigen zu können)")
     days = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                      choices=CHOICES, label="An welchen Tagen möchtest du die Watchparty anbieten?")
     
