@@ -1,8 +1,9 @@
 .iframe-container {
     position: relative;
     padding-bottom: 56.5%;
-    height: 0;    
+    height: 0;
 }
+
 .iframe-container iframe {
     position: absolute;
     top: 0;
@@ -12,11 +13,13 @@
 }
 
 /*Display table in watchparty_info responsive*/
+
 @media (max-width: 500px) {
     .our-large-table {
         display: none;
     }
 }
+
 @media (min-width: 501px) {
     .our-small-table {
         display: none;
@@ -53,7 +56,6 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
-
 .easy-button-container {
     background: #FFCF48;
     margin: 1rem;
@@ -74,19 +76,54 @@
 }
 
 .leaflet-bar button:hover {
-    background-color: #FFCF48;
+    background-color: #f7bf26;
 }
 
+.mybtn {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    float: right;
+    transition: width 250ms, opacity 500ms;
+    text-align: left;
+    color: black;
+    padding: 0;
+    margin: 10px 10px 0 0;
+    pointer-events: auto;
+}
+
+.mybtn:hover {
+    width: 270px;
+}
+
+#test {
+    opacity: 0%;
+    white-space: nowrap;
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.mybtn:hover #test {
+    opacity: 100%;
+}
+
+.mydiv {
+    margin: 5px 0 0 5px;
+    white-space: nowrap;
+    font-size: 25px;
+    overflow: hidden;
+    padding: 0;
+}
 
 @media (min-width: 800px) {
     .leaflet-popup-content {
-        width:250px;
+        width: 250px;
     }
 }
 
 @media (max-width: 799px) {
     .leaflet-popup-content {
-        width:150px;
+        width: 150px;
     }
 }
 
