@@ -94,9 +94,9 @@
             <div class="sticky-top container pt-2 days-navbar-container" >
                 <nav class="days-navbar">
                     <ul class="nav nav-pills " id="navList">
-                        <li class="nav-item"><a class="nav-link active day" href="#montag" data-target="#programCarousel" data-slide-to="0" data-toggle="pill">MO</a>
+                        <li class="nav-item"><a class="nav-link day" href="#montag" data-target="#programCarousel" data-slide-to="0" data-toggle="pill">MO</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link day" href="#dienstag" data-target="#programCarousel" data-slide-to="1" data-toggle="pill">DI</a>
+                        <li class="nav-item"><a class="nav-link active day" href="#dienstag" data-target="#programCarousel" data-slide-to="1" data-toggle="pill">DI</a>
                         </li>
                         <li class="nav-item"><a class="nav-link day" href="#mittwoch" data-target="#programCarousel" data-slide-to="2" data-toggle="pill">MI</a>
                         </li>
@@ -114,15 +114,15 @@
                 <div id="programCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <!--Indicators-->
                     <ol class="carousel-indicators">
-                        <li class="sr-only active" data-target="#programCarousel" data-slide-to="0"></li>
-                        <li class="sr-only" data-target="#programCarousel" data-slide-to="1"></li>
+                        <li class="sr-only" data-target="#programCarousel" data-slide-to="0"></li>
+                        <li class="sr-only active" data-target="#programCarousel" data-slide-to="1"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="2"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="3"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="4"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="5"></li>
                     </ol>
                     <div class="carousel-inner bg-dark ">
-                        <div class="carousel-item active" id="montag" >
+                        <div class="carousel-item" id="montag" >
                             <div class="row">
                                 <div class="col day-image">
                                     <img src="{% static "assets/img/tage/cropped/montag.svg" %}" class="d-block">
@@ -141,7 +141,7 @@
                                             <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/A26KycD_ogY">Livestream</a> | 
+                                                <a href="https://youtu.be/A26KycD_ogY">Livestream</a> | danach: Diskussion/Spiele auf 
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Wer ich bin, was mich ausmacht, ob ich genüge...
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item" id="dienstag" >
+                        <div class="carousel-item active" id="dienstag" >
                             <div class="row">
                                 <div class="col day-image">
                                     <img src="{% static "assets/img/tage/cropped/dienstag.svg" %}" class="d-block">
@@ -193,7 +193,7 @@
                                             <dd >Postkarten auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/CC16JMKyVgE">Livestream</a> |
+                                                <a href="https://youtu.be/CC16JMKyVgE">Livestream</a> | danach: Diskussion/Spiele auf 
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Am Dienstag wollen wir uns mit Enttäuschungen und persönlichen Krisen beschäftigen.
@@ -244,7 +244,7 @@
                                             <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/v8iC10mI_Xk">Livestream</a> |
+                                                <a href="https://youtu.be/v8iC10mI_Xk">Livestream</a> | danach: Diskussion/Spiele auf
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Beziehungen gehören zum Menschsein wie die Luft zum Atmen.
@@ -297,7 +297,7 @@
                                             <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/_SLAYpWxz7s">Livestream</a> |
+                                                <a href="https://youtu.be/_SLAYpWxz7s">Livestream</a> | danach: Diskussion/Spiele auf
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Anders als in unseren Träumen lehrt uns die Realität, dass wir als Menschen an Grenzen stoßen.
@@ -349,7 +349,7 @@
                                             <dd >KreideAktion, Treffpunkt Bismarckplatz</dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/-LCGZcbCoHk">Livestream</a> |
+                                                <a href="https://youtu.be/-LCGZcbCoHk">Livestream</a> | danach: Diskussion/Spiele auf
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Das Seltsame am Himmel ist, dass alle ihn anscheinend toll finden, aber keiner irgendwie so recht hin will.
@@ -397,7 +397,7 @@
                                             <dd ><a href="#prayer-breakfast" style="color: white;" data-toggle="modal">Gebetsfrühstück, Neckarwiese</a></dd>
                                             <dt >19:00</dt>
                                             <dd >
-                                                <a href="https://youtu.be/KslcsGGdEHA">Livestream</a> |
+                                                <a href="https://youtu.be/KslcsGGdEHA">Livestream</a> | danach: Diskussion/Spiele auf
                                                 <a href="https://tinyurl.com/hochschultage21zoom">Zoom</a><br>
                                                 <p class="small">
                                                     Wer ist Jesus? An dieser Frage scheiden sich bis heute die Geister.
