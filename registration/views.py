@@ -41,13 +41,14 @@ def index(request):
         domain = get_current_site(request).domain
         link = f"{ scheme }://{domain}/registration/{watchparty.loc_id}/"
         popup_str = f"""<strong> {watchparty.plz} {watchparty.city} </strong><br>
-            { watchparty.street } <br>
-            <br>
+            { watchparty.street }
+            <p>
             freie Haushalte: { free_households }<br>
             freie Plätze: { free_vaccinated } (davon bis zu { free_unvaccinated } verfügbar für nicht Geimpfte)
+            </p>
             """
         if (free_vaccinated) > 0:
-            popup_str += f"<br><a href=' { link } '>Anmeldung</a>"
+            popup_str += f"<a class='btn btn-sm btn-primary' style='color: black' href=' { link } '>Anmelden</a>"
 
         if free_unvaccinated > 0:
             color = "green"
