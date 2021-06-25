@@ -1,3 +1,9 @@
+@media (max-width: 576px) {
+    .my-logo {
+        display: none;
+    }
+}
+
 .iframe-container {
     position: relative;
     padding-bottom: 56.5%;
