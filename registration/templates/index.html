@@ -196,9 +196,9 @@
                         </li>
                         <li class="nav-item"><a class="nav-link day" href="#donnerstag" data-target="#programCarousel" data-slide-to="3" data-toggle="pill">DO</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link active day" href="#freitag" data-target="#programCarousel" data-slide-to="4" data-toggle="pill">FR</a>
+                        <li class="nav-item"><a class="nav-link day" href="#freitag" data-target="#programCarousel" data-slide-to="4" data-toggle="pill">FR</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link day" href="#samstag" data-target="#programCarousel" data-slide-to="5" data-toggle="pill">SA</a>
+                        <li class="nav-item"><a class="nav-link active day" href="#samstag" data-target="#programCarousel" data-slide-to="5" data-toggle="pill">SA</a>
                         </li>
                     </ul>
                 </nav>
@@ -212,8 +212,8 @@
                         <li class="sr-only" data-target="#programCarousel" data-slide-to="1"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="2"></li>
                         <li class="sr-only" data-target="#programCarouse" data-slide-to="3"></li>
-                        <li class="sr-only active" data-target="#programCarouse" data-slide-to="4"></li>
-                        <li class="sr-only" data-target="#programCarouse" data-slide-to="5"></li>
+                        <li class="sr-only" data-target="#programCarouse" data-slide-to="4"></li>
+                        <li class="sr-only active" data-target="#programCarouse" data-slide-to="5"></li>
                     </ol>
                     <div class="carousel-inner bg-dark ">
                         <div class="carousel-item" id="montag" >
@@ -428,7 +428,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item active" id="freitag">
+                        <div class="carousel-item" id="freitag">
                             <div class="row">
                                 <div class="col day-image">
                                     <img src="{% static 'assets/img/tage/cropped/freitag.svg' %}" class="d-block">
@@ -478,7 +478,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item" id="samstag">
+                        <div class="carousel-item active" id="samstag">
                             <div class="row">
                                 <div class="col day-image">
                                     <img src="{% static 'assets/img/tage/cropped/samstag.svg' %}" class="d-block">
@@ -489,6 +489,8 @@
                                         <dl>
                                             <dt >08:00-08:20</dt>
                                             <dd ><a href="#prayer-breakfast" style="color: white;" data-toggle="modal">Gebetsfrühstück, Neckarwiese</a></dd>
+                                            <dt >16:00</dt>
+                                            <dd >Spiele auf der Neckarwiese</dd>
                                             <dt >19:00</dt>
                                             <dd >
                                                 <a href="https://youtu.be/KslcsGGdEHA">Livestream</a> | danach: 
