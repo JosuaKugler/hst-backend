@@ -17,8 +17,8 @@ from .tokens import account_activation_token
 scheme = 'https'
 
 #corona-rules:
-max_people = 10
-max_households = 3
+max_people = 200
+max_households = 200
 
 # Create your views here.
 def index(request):
